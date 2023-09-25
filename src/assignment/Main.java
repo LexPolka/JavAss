@@ -11,6 +11,7 @@ package assignment;
  */
 import java.util.Scanner;
 // LOOK HERE ALOY
+// ASSHOLE
 
 public class Main {
     public static void main(String[] args) 
