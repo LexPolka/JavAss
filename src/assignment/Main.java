@@ -10,9 +10,12 @@ package assignment;
  */
 import java.util.Scanner;
 
+jibai
+
 public class Main {
     public static void main(String[] args) 
     {
+        // this is a test
         // GAMES
         Game[] games = new Game[5];
         games[0] = new Game("Night in the Woods", 10, "Adventure" , "  College dropout Mae Borowski returns home to the"
