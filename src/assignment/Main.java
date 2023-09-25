@@ -12,7 +12,7 @@ package assignment;
  */
 import java.util.Scanner;
 // LOOK HERE ALOY
-// ASSHOLE
+// ASSHOLE Aloy
 
 public class Main {
     public static void main(String[] args) 
