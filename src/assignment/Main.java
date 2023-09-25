@@ -10,6 +10,7 @@ package assignment;
  * @author admin
  */
 import java.util.Scanner;
+// LOOK HERE ALOY
 
 public class Main {
     public static void main(String[] args) 
