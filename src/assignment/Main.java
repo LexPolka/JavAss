@@ -10,8 +10,6 @@ package assignment;
  */
 import java.util.Scanner;
 
-jibai
-
 public class Main {
     public static void main(String[] args) 
     {
@@ -130,7 +128,7 @@ public class Main {
         System.out.println("\n  [Added To Cart]!");
         if (choice == 1)
         {
-           cart
+           //cart
         }
         if (choice == 2)
         {
