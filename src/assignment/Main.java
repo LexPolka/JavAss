@@ -19,8 +19,13 @@ public class Main
         // this is a test
         // GAMES
         ArrayList<Game> gameList = new ArrayList();
+        ArrayList<Cart> cartList = new ArrayList();
         Game game = new Game();
-         gameList.add(new Game("G1001","Night in the Woods", 10,"Adventure", 
+        double totalPrice = 0;
+        Scanner sc = new Scanner(System.in);
+        int option = 0;
+        char proceed;
+         gameList.add(new Game("GA1001","Night in the Woods", 10,"Adventure", 
                 """
                 College dropout Mae Borowski returns home to the
                      crumbling former mining town of Possum Springs            
@@ -32,7 +37,7 @@ public class Main
                      Strange things are happening as the light fades.
                      And there is something in the woods.
                      """));
-        gameList.add(new Game("G1002", "Undertale", 20, "Role Playing", 
+        gameList.add(new Game("GR1002", "Undertale", 20, "Role Playing", 
                 """
                 Welcome to UNDERTALE. In this RPG, you control
                      a human who falls underground into the world of monsters.
@@ -69,7 +74,6 @@ public class Main
                [!] Frequent Violence or Gore, General Mature Content
                                                                               """));    
                 
-          
         
         // REVIEWS
         Review[] Game1Reviews = new Review[10];
@@ -105,31 +109,16 @@ public class Main
 // SYSTEM STARTS HERE ===================================================== !!!!!        
 
         //Variables
-        int choice = 0;
-        int option = 0;
-        Scanner sc = new Scanner(System.in);
-
-        // GAME SELECT SEGMENT
-        System.out.printf(
-                """
-                ------------------------------------------------------
-                               Games on Sale!
-                           1. Night in the Woods
-                           2. Undertale
-                           3. Hollow Knight
-                           4. Elden Ring
-                           5. Detroit: Become Human
-                ------------------------------------------------------
-                      Please Enter your choice (1-5):   """
-                                                 
-        );
-       boolean input = false;
+        do{
+        gameMenu();
+        System.out.printf("Select a game > ");
+        boolean input = false;
        
        while(!input){
        try{
            option = sc.nextInt();
-           option--;
            if(option >= 1 && option <= 5){
+               option--;
                game = gameList.get(option);
                input = true;
            }
@@ -163,46 +152,27 @@ public class Main
         // OPTIONS SEGMENT (CART, REVIEWS, 
         System.out.printf("     [1] Add to Cart     [2] Reviews     [3] Back to Games   "
                           + "\n   Please Enter An Option (1-3): ");
+        
         option = sc.nextInt();
-
-        // VALIDATE
-        while (option < 1 || option > 3)
+        int choice = 0;
+        switch(option)
         {
-            System.out.print("\n   [Invalid Option!]" + "\n   Please Enter an Option (1-3): ");
-            option = sc.nextInt();
-        }
-
-        choice++;
-        // ADD TO CART
-        if (option == 1)
-        {
-            System.out.println("\n  [Added To Cart]!");
-            if (choice == 1)
-            {
-               //cart
-            }
-            if (choice == 2)
-            {
-               
-            }
-             if (choice == 3)
-            {
-               
-            }
-              if (choice == 4)
-            {
-               
-            }
-               if (choice == 5)
-            {
-               
-            }
-        }
-
-        // REVIEWS SEGMENT (OPTIMIZE)
-        if (option == 2)
-        {
-            System.out.println("\n  Showing recent reviews:" + "\n  -------------------------");
+            case 1:
+                cartList.add(new Cart(game.getGameID(),game.getGameName(), game.getPrice()));
+                System.out.printf("""
+                                  ================= Your Cart Content =================
+                                  Game Name                                       Price
+                        
+                                  """);
+                for(Cart cartprint : cartList)
+                {
+                    System.out.println(cartprint.getGameName()  + "    " + cartprint.getPrice());
+                }
+                totalPrice += game.getPrice();
+                System.out.println("Total price: " + totalPrice);
+                break;
+            case 2:
+                System.out.println("\n  Showing recent reviews:" + "\n  -------------------------");
             if (choice == 1)
             {
                for (int i = 0; i < Game1Reviews.length; i++)
@@ -239,7 +209,13 @@ public class Main
                }
             }
         }
+        System.out.println("\n Continue Looking For Game? > ");
+        proceed = sc.next().charAt(0);
+        sc.nextLine();
+    }while( proceed == 'Y');
     }
+                
+        // REVIEWS SEGMENT (OPTIMIZE)
     
     //TOP UP ACCOUNT WALLET
    public static void topup()
@@ -267,6 +243,12 @@ public class Main
        //
        
    }
+   
+   public static void gameMenu(){
+        gameMenu menu = new gameMenu();
+        System.out.println(menu.toString());
+    }
+   
     public static void topUp()
    {
        int topupChoice;
