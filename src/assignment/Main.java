@@ -10,7 +10,8 @@ package assignment;
  */
 import java.util.ArrayList;
 import java.util.Scanner;
-
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 public class Main 
 {   
     public static void main(String[] args) 
@@ -106,7 +107,6 @@ public class Main
         //Variables
         int choice = 0;
         int option = 0;
-        int selection = 0;
         Scanner sc = new Scanner(System.in);
 
         // GAME SELECT SEGMENT
@@ -145,7 +145,6 @@ public class Main
            sc.nextLine();
        }
        }
-        
         System.out.printf(
                           """
                           =================================================================
@@ -268,6 +267,89 @@ public class Main
        //
        
    }
+    public static void topUp()
+   {
+       int topupChoice;
+       Scanner sc = new Scanner(System.in);
+    
+       //print account wallet info
+       System.out.print(AccountWallet.class.toString());
+       System.out.println("Please Select a Top-Up option below:");
+       System.out.println("1. RM 10");
+       System.out.println("2. RM 20");
+       System.out.println("3. RM 50");
+       System.out.println("\n0. Exit");
+       
+       topupChoice = sc.nextInt();
+       
+       //VALIDATE
+       while (topupChoice < 0 || topupChoice > 4)
+        {
+            System.out.print("\n   [Invalid Option!]" + "\n   Please Re-enter your choice (0-3): ");
+            topupChoice = sc.nextInt();
+        }
+       
+       //
+       switch(topupChoice)
+       {
+           case 0:
+               //back to main
+           case 1:
+               System.out.println("Successful Top-Up!\nRM 10 Added to balance!");
+               //do topup
+           case 2:
+               System.out.println("Successful Top-Up!\nRM 20 Added to balance!");
+               //do topup
+           case 3:
+               System.out.println("Successful Top-Up!\nRM 50 Added to balance!");  
+               //do topup
+       }
+   }
+   
+   public static void addBank()
+   {
+        String cardNumber;
+        String cardType;
+        boolean valid = false;
+        Scanner sc = new Scanner(System.in);
+        System.out.println("== Adding Bank Account ============================="
+                        + "\n Enter Bank Associated with Account > "
+                        );
+       
+        cardType = sc.next();
+       
+        System.out.println(" Enter Bank Account Number (8 digits) > "
+                        );
+      
+        cardNumber = sc.next();
+        
+        do
+        {
+            if (isEightDigits(cardNumber))
+            {
+                valid = true;
+            }
+            else
+            {
+                valid = false;
+                System.out.println("Invalid Card Number! Must be at least 8 Digits!");
+            }
+        } while (valid == false);
+   }
+   
+   public static boolean isEightDigits(String input) {
+        // Define a regular expression pattern for 8 digits
+        String regex = "\\d{8}";
+
+        // Create a Pattern object
+        Pattern pattern = Pattern.compile(regex);
+
+        // Create a Matcher object to match the input against the pattern
+        Matcher matcher = pattern.matcher(input);
+
+        // Check if the input matches the pattern (contains 8 digits)
+        return matcher.matches();
+    }
    
 }
 
