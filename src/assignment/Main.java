@@ -8,6 +8,7 @@ package assignment;
  *
  * @author admin
  */
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main 
@@ -16,34 +17,58 @@ public class Main
     {
         // this is a test
         // GAMES
-        Game[] games = new Game[5];
-        games[0] = new Game("Night in the Woods", 10, "Adventure" , "  College dropout Mae Borowski returns home to the"
-                + "\n             crumbling former mining town of Possum Springs."+ "\n             Seeking to resume her aimless former life and"
-                + "\n             reconnect with the friends she left behind."+ "\n             But things are not the same. Home seems different"
-                + "\n             now and her friends have grown and changed."+ "\n             Leaves are falling and the wind is growing colder."
-                + "\n             Strange things are happening as the light fades."+ "\n"+ "\n             And there is something in the woods."
-        );
-        games[1] = new Game("Undertale", 20, "Indie / RPG" , "  Welcome to UNDERTALE. In this RPG, you control"
-                + "\n             a human who falls underground into the world of monsters."+ "\n             Now you must find your way out... or stay trapped forever."
-                + "\n"+ "\n             ((Healthy Dog is Warning: Game contains imagery"+ "\n             that may be harmful to players with"
-                + "\n             photosensitive epilepsy or similar condition.))"
-        );
-        games[2] = new Game("Hollow Knight", 90, "Action / Indie / Adventure" ,"  Forge your own path in Hollow Knight! An epic action"
-                + "\n             adventure through a vast ruined kingdom of insects"+ "\n             and heroes. Explore twisting caverns, battle tainted"
-                + "\n             creatures and befriend bizarre bugs, all in a classic,"+ "\n             hand-drawn 2D style."
-                + "\n"+ "\n             Hollow Knight is a challenging 2D action-adventure."+ "\n             You will explore twisting caverns, battle tainted creatures"
-                + "\n             and escape intricate traps, all to solve an ancient,"+ "\n             long-hidden mystery."
-        );
-        games[3] = new Game("Elden Ring", 180, "Action / RPG" ,"  THE NEW FANTASY ACTION RPG. Rise, Tarnished,"
-                + "\n             and be guided by grace to brandish the power of the"+ "\n             Elden Ring and become an Elden Lord in the Lands Between."
-                + "\n"+ "\n             This Game may contain content not appropriate for all"+ "\n             ages, or may not be appropriate for viewing at work:"
-                + "\n             [!] Frequent Violence or Gore, General Mature Content"
-        );
-        games[4] = new Game("Detroit: Become Human", 80,"Adventure / Action" ,"  Detroit 2038. Technology has evolved to a point"
-                + "\n             where human like androids are everywhere."+ "\n             They speak, move and behave like human beings,"
-                + "\n             but they are only machines serving humans."+ "\n"+ "\n             This Game may contain content not appropriate for all"
-                + "\n             ages, or may not be appropriate for viewing at work: "+ "\n             [!] Frequent Violence or Gore, General Mature Content"
-        );
+        ArrayList<Game> gameList = new ArrayList();
+        Game game = new Game();
+         gameList.add(new Game("G1001","Night in the Woods", 10,"Adventure", 
+                """
+                College dropout Mae Borowski returns home to the
+                     crumbling former mining town of Possum Springs            
+                     Seeking to resume her aimless former life and
+                     reconnect with the friends she left behind.
+                     But things are not the same. Home seems different
+                     now and her friends have grown and changed.
+                     Leaves are falling and the wind is growing colder.
+                     Strange things are happening as the light fades.
+                     And there is something in the woods.
+                     """));
+        gameList.add(new Game("G1002", "Undertale", 20, "Role Playing", 
+                """
+                Welcome to UNDERTALE. In this RPG, you control
+                     a human who falls underground into the world of monsters.
+                     Now you must find your way out... or stay trapped forever.
+                     ((Healthy Dog is Warning: Game contains imagery
+                     that may be harmful to players with
+                     photosensitive epilepsy or similar condition.
+                     """));
+        gameList.add(new Game("G1003","Hollow Knight", 90 ,"Action / Indie / Adventure", 
+                """
+                Forge your own path in Hollow Knight! An epic action
+                     adventure through a vast ruined kingdom of insects
+                     and heroes. Explore twisting caverns, battle tainted
+                     creatures and befriend bizarre bugs, all in a classic,
+                     hand-drawn 2D style.                                                                    
+                     """));
+        gameList.add(new Game("G1004","Elden Ring", 199, "Action / RPG / Adventure", 
+                """
+                THE NEW FANTASY ACTION RPG. Rise, Tarnished,
+                and be guided by grace to brandish the power of the
+                Elden Ring and become an Elden Lord in the Lands Between.
+                This Game may contain content not appropriate for all
+                ages, or may not be appropriate for viewing at work:
+                [!] Frequent Violence or Gore, General Mature Content
+                                                                  """));
+       gameList.add(new Game("G1005", "Detroit: Become Human", 107, "Adventure / Story Rich",
+               """
+               Detroit 2038. Technology has evolved to a point
+               where human like androids are everywhere.                                                                              
+               They speak, move and behave like human beings,
+               but they are only machines serving humans.
+               This Game may contain content not appropriate for all
+               ages, or may not be appropriate for viewing at work:
+               [!] Frequent Violence or Gore, General Mature Content
+                                                                              """));    
+                
+          
         
         // REVIEWS
         Review[] Game1Reviews = new Review[10];
@@ -81,38 +106,64 @@ public class Main
         //Variables
         int choice = 0;
         int option = 0;
+        int selection = 0;
         Scanner sc = new Scanner(System.in);
 
         // GAME SELECT SEGMENT
-        System.out.printf("------------------------------------------------------"
-                + "\n               Games on Sale!"
-                + "\n            1. Night in the Woods"
-                + "\n            2. Undertale"
-                + "\n            3. Hollow Knight"
-                + "\n            4. Elden Ring"
-                + "\n            5. Detroit: Become Human"
-                + "\n------------------------------------------------------"
-                + "\n   Please Enter your choice (1-5): "
+        System.out.printf(
+                """
+                ------------------------------------------------------
+                               Games on Sale!
+                           1. Night in the Woods
+                           2. Undertale
+                           3. Hollow Knight
+                           4. Elden Ring
+                           5. Detroit: Become Human
+                ------------------------------------------------------
+                      Please Enter your choice (1-5):   """
+                                                 
         );
-
-        choice = sc.nextInt();
-        choice--;
-
-        //VALIDATE
-        while (choice < 0 || choice > 4)
-        {
-            System.out.print("\n   [Invalid Option!]" + "\n   Please Re-enter your choice (1-5): ");
-            choice = sc.nextInt();
-        }       
-
-        System.out.println("\n   Showing Description for: " + games[choice].getGameName());
-        System.out.println(games[choice].displayGame());
+       boolean input = false;
+       
+       while(!input){
+       try{
+           option = sc.nextInt();
+           option--;
+           if(option >= 1 && option <= 5){
+               game = gameList.get(option);
+               input = true;
+           }
+           else{
+              System.out.println("Invalid Option! Please select only from 1 to 5!");
+              sc.nextLine();
+           }
+              
+       }catch (Exception ex)
+       {
+           System.out.println("Invalid Option! Please select only from 1 to 5!");
+           input = false;
+           sc.nextLine();
+       }
+       }
+        
+        System.out.printf(
+                          """
+                          =================================================================
+                              Game Name  : %s
+                              Game Price : %.2f
+                              Game Genre : %s
+                             ______________________________
+                              Game Description
+                             ------------------------------ 
+                               %s
+                          ==================================================================
+                              """, game.getGameName(), game.getPrice(), game.getGenre(), game.getGameDesc()
+                                       );
+             
 
         // OPTIONS SEGMENT (CART, REVIEWS, 
         System.out.printf("     [1] Add to Cart     [2] Reviews     [3] Back to Games   "
-                          + "\n   Please Enter An Option (1-3): "
-        );
-
+                          + "\n   Please Enter An Option (1-3): ");
         option = sc.nextInt();
 
         // VALIDATE
