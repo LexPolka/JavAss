@@ -14,6 +14,11 @@ public class AccountWallet {
     
     private int lastID;
     
+    public AccountWallet()
+    {
+        
+    }
+    
     public AccountWallet(double walletAmount)
     {
         this.walletID = lastID;

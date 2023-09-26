@@ -214,35 +214,6 @@ public class Main
         sc.nextLine();
     }while( proceed == 'Y');
     }
-                
-        // REVIEWS SEGMENT (OPTIMIZE)
-    
-    //TOP UP ACCOUNT WALLET
-   public static void topup()
-   {
-       int topupChoice;
-       Scanner sc = new Scanner(System.in);
-    
-       //print account wallet info
-       System.out.print(AccountWallet.class.toString());
-       System.out.println("Please Select a Top-Up option below:");
-       System.out.println("1. RM 10");
-       System.out.println("2. RM 20");
-       System.out.println("3. RM 50");
-       System.out.println("\n0. Exit");
-       
-       topupChoice = sc.nextInt();
-       
-       //VALIDATE
-       while (topupChoice < 0 || topupChoice > 4)
-        {
-            System.out.print("\n   [Invalid Option!]" + "\n   Please Re-enter your choice (1-5): ");
-            topupChoice = sc.nextInt();
-        }
-       
-       //
-       
-   }
    
    public static void gameMenu(){
         gameMenu menu = new gameMenu();
@@ -251,41 +222,26 @@ public class Main
    
     public static void topUp()
    {
-       int topupChoice;
-       Scanner sc = new Scanner(System.in);
-    
-       //print account wallet info
-       System.out.print(AccountWallet.class.toString());
-       System.out.println("Please Select a Top-Up option below:");
-       System.out.println("1. RM 10");
-       System.out.println("2. RM 20");
-       System.out.println("3. RM 50");
-       System.out.println("\n0. Exit");
-       
-       topupChoice = sc.nextInt();
-       
-       //VALIDATE
-       while (topupChoice < 0 || topupChoice > 4)
+        String topupInput;
+        double amount;
+        AccountWallet wallet = new AccountWallet();
+
+        Scanner sc = new Scanner(System.in);
+
+        //print account wallet info
+        System.out.print(wallet.toString());
+        System.out.println("Please input amount to Top-Up below: ");
+        System.out.println("Do 'X' to Exit");
+
+        topupInput = sc.nextLine();
+
+        if (!topupInput.equalsIgnoreCase("X"))
         {
-            System.out.print("\n   [Invalid Option!]" + "\n   Please Re-enter your choice (0-3): ");
-            topupChoice = sc.nextInt();
+            amount = Double.parseDouble(topupInput);
+            wallet.increase(amount);
+            System.out.println(" Your Current Balance is: " + wallet.checkBalance());
         }
        
-       //
-       switch(topupChoice)
-       {
-           case 0:
-               //back to main
-           case 1:
-               System.out.println("Successful Top-Up!\nRM 10 Added to balance!");
-               //do topup
-           case 2:
-               System.out.println("Successful Top-Up!\nRM 20 Added to balance!");
-               //do topup
-           case 3:
-               System.out.println("Successful Top-Up!\nRM 50 Added to balance!");  
-               //do topup
-       }
    }
    
    public static void addBank()
