@@ -73,4 +73,9 @@ public class Game {
     public void setgameGenre(String gameGenre){
         this.gameGenre = gameGenre;
     }
+    public Game(String gameID, String gameName, double price){
+        this.gameID = gameID;
+        this.gameName = gameName;
+        this.price = price;
+    }
 }

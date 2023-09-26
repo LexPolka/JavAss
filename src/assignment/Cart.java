@@ -8,35 +8,18 @@ package assignment;
  *
  * @author admin
  */
-public class Cart {
-    private int cartID;
+public class Cart extends Game {
     private double totalPrice;
-    
-    private int lastCartID;
-    
-    public Cart (String cartID, double totalPrice)
-    {
-        this.cartID = lastCartID;
-        this.totalPrice = totalPrice;
-        
-        lastCartID++;
+    public Cart(){
+    }
+    public Cart(String gameID, String gameName, double price){
+        super(gameID, gameName, price);
     }
     
-    public int getCartID()
-    {
-        return this.cartID;
+    public String selectedgameName(String selectedgameName){
+        return selectedgameName;
     }
-    public double getTotalPrice()
-    {
-        return this.totalPrice;
-    }
+   
     
-    public void setCartID(int newCartID)
-    {
-        this.cartID = newCartID;
-    }
-    public void setTotalPrice(double newTotalPrice)
-    {
-        this.totalPrice = newTotalPrice;
-    }
+    
 }
