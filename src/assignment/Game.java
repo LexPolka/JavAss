@@ -8,39 +8,32 @@ package assignment;
  *
  * @author admin
  */
+
 public class Game {
-    protected int gameID;
+    protected String gameID;
     protected String gameName;
     protected double price;
     protected String gameGenre;
     protected String gameDesc;
-    private static int lastGameID = 1001;
+    private static int numGameID= 1001;
     
     //Functions
-    public String displayGame()
-    {
-        return String.format
-        ("=================================================================="
-        + "\nName       : " + gameName
-        + "\nPrice      : RM " + price
-        + "\nGenre      : " + gameGenre
-        + "\nDescription: " + gameDesc
-        + "\n==================================================================");
+    public Game(){
+        numGameID++;
     }
     
     //Constructor
-    public Game (String gameName, double price, String gameGenre, String gameDesc)
+    public Game (String gameID, String gameName, double price, String gameGenre, String gameDesc)
     {
+        this.gameID = gameID;
         this.gameName = gameName;
         this.price = price;
         this.gameGenre = gameGenre;
         this.gameDesc = gameDesc;
-        this.gameID = lastGameID;
-        lastGameID++;
     }
     
     //Accessors
-    public int getGameID()
+    public String getGameID()
     {
         return gameID;
     }
@@ -56,9 +49,12 @@ public class Game {
     {
         return price;
     }
+     public String getGenre(){
+        return gameGenre;
+    }
     
     //Mutators
-    public void setGameID(int newGameID)
+    public void setGameID(String newGameID)
     {
         this.gameID = newGameID;
     }
@@ -73,5 +69,8 @@ public class Game {
     public void setPrice(double newPrice)
     {
         this.price = newPrice;
+    }
+    public void setgameGenre(String gameGenre){
+        this.gameGenre = gameGenre;
     }
 }
