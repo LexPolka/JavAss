@@ -22,6 +22,17 @@ public class AccountWallet {
         lastID++;
     }
     
+    @Override
+    public String toString()
+    {
+        return String.format
+        ("=================================================================="
+        + "\n           Welcome to Account Wallet Top-Up!"
+        + "\nID      : " + walletID
+        + "\nBalance : RM " + walletAmount
+        + "\n==================================================================");
+    }
+    
     public double checkBalance()
     {
         return walletAmount;

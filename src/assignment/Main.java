@@ -1,5 +1,3 @@
-//AMOGUS SUSSY 11:30pm
-//amogyus sussy 11:43pm
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -11,11 +9,9 @@ package assignment;
  * @author admin
  */
 import java.util.Scanner;
-// LOOK HERE ALOY
-// ASSHOLE Aloy
-//helsjsajs
 
-public class Main {
+public class Main 
+{   
     public static void main(String[] args) 
     {
         // this is a test
@@ -81,134 +77,146 @@ public class Main {
         wallet[2] = new AccountWallet(300);
         
 // SYSTEM STARTS HERE ===================================================== !!!!!        
-    
-    //Variables
-    int choice = 0;
-    int option = 0;
-    Scanner sc = new Scanner(System.in);
-    
-    // GAME SELECT SEGMENT
-    System.out.printf("------------------------------------------------------"
-            + "\n               Games on Sale!"
-            + "\n            1. Night in the Woods"
-            + "\n            2. Undertale"
-            + "\n            3. Hollow Knight"
-            + "\n            4. Elden Ring"
-            + "\n            5. Detroit: Become Human"
-            + "\n------------------------------------------------------"
-            + "\n   Please Enter your choice (1-5): "
-    );
 
-    choice = sc.nextInt();
-    choice--;
-    
-    //VALIDATE
-    while (choice < 0 || choice > 4)
-    {
-        System.out.print("\n   [Invalid Option!]" + "\n   Please Re-enter your choice (1-5): ");
+        //Variables
+        int choice = 0;
+        int option = 0;
+        Scanner sc = new Scanner(System.in);
+
+        // GAME SELECT SEGMENT
+        System.out.printf("------------------------------------------------------"
+                + "\n               Games on Sale!"
+                + "\n            1. Night in the Woods"
+                + "\n            2. Undertale"
+                + "\n            3. Hollow Knight"
+                + "\n            4. Elden Ring"
+                + "\n            5. Detroit: Become Human"
+                + "\n------------------------------------------------------"
+                + "\n   Please Enter your choice (1-5): "
+        );
+
         choice = sc.nextInt();
-    }       
-    
-    System.out.println("\n   Showing Description for: " + games[choice].getGameName());
-    System.out.println(games[choice].displayGame());
-    
-    // OPTIONS SEGMENT (CART, REVIEWS, 
-    System.out.printf("     [1] Add to Cart     [2] Reviews     [3] Back to Games   "
-                      + "\n   Please Enter An Option (1-3): "
-    );
-    
-    option = sc.nextInt();
-    
-    // VALIDATE
-    while (option < 1 || option > 3)
-    {
-        System.out.print("\n   [Invalid Option!]" + "\n   Please Enter an Option (1-3): ");
+        choice--;
+
+        //VALIDATE
+        while (choice < 0 || choice > 4)
+        {
+            System.out.print("\n   [Invalid Option!]" + "\n   Please Re-enter your choice (1-5): ");
+            choice = sc.nextInt();
+        }       
+
+        System.out.println("\n   Showing Description for: " + games[choice].getGameName());
+        System.out.println(games[choice].displayGame());
+
+        // OPTIONS SEGMENT (CART, REVIEWS, 
+        System.out.printf("     [1] Add to Cart     [2] Reviews     [3] Back to Games   "
+                          + "\n   Please Enter An Option (1-3): "
+        );
+
         option = sc.nextInt();
-    }
-    
-    choice++;
-    // ADD TO CART
-    if (option == 1)
-    {
-        System.out.println("\n  [Added To Cart]!");
-        if (choice == 1)
+
+        // VALIDATE
+        while (option < 1 || option > 3)
         {
-           //cart
+            System.out.print("\n   [Invalid Option!]" + "\n   Please Enter an Option (1-3): ");
+            option = sc.nextInt();
         }
-        if (choice == 2)
+
+        choice++;
+        // ADD TO CART
+        if (option == 1)
         {
-           for (int i = 0; i < Game2Reviews.length; i++)
-           {
-                System.out.println(Game2Reviews[i].displayReview());
-           }
+            System.out.println("\n  [Added To Cart]!");
+            if (choice == 1)
+            {
+               //cart
+            }
+            if (choice == 2)
+            {
+               
+            }
+             if (choice == 3)
+            {
+               
+            }
+              if (choice == 4)
+            {
+               
+            }
+               if (choice == 5)
+            {
+               
+            }
         }
-         if (choice == 3)
+
+        // REVIEWS SEGMENT (OPTIMIZE)
+        if (option == 2)
         {
-           for (int i = 0; i < Game3Reviews.length; i++)
-           {
-                System.out.println(Game3Reviews[i].displayReview());
-           }
-        }
-          if (choice == 4)
-        {
-           for (int i = 0; i < Game4Reviews.length; i++)
-           {
-                System.out.println(Game4Reviews[i].displayReview());
-           }
-        }
-           if (choice == 5)
-        {
-           for (int i = 0; i < Game5Reviews.length; i++)
-           {
-                System.out.println(Game5Reviews[i].displayReview());
-           }
-        }
-    }
-    
-    // REVIEWS SEGMENT (OPTIMIZE)
-    if (option == 2)
-    {
-        System.out.println("\n  Showing recent reviews:" + "\n  -------------------------");
-        if (choice == 1)
-        {
-           for (int i = 0; i < Game1Reviews.length; i++)
-           {
-                System.out.println(Game1Reviews[i].displayReview());
-           }
-        }
-        if (choice == 2)
-        {
-           for (int i = 0; i < Game2Reviews.length; i++)
-           {
-                System.out.println(Game2Reviews[i].displayReview());
-           }
-        }
-         if (choice == 3)
-        {
-           for (int i = 0; i < Game3Reviews.length; i++)
-           {
-                System.out.println(Game3Reviews[i].displayReview());
-           }
-        }
-          if (choice == 4)
-        {
-           for (int i = 0; i < Game4Reviews.length; i++)
-           {
-                System.out.println(Game4Reviews[i].displayReview());
-           }
-        }
-           if (choice == 5)
-        {
-           for (int i = 0; i < Game5Reviews.length; i++)
-           {
-                System.out.println(Game5Reviews[i].displayReview());
-           }
+            System.out.println("\n  Showing recent reviews:" + "\n  -------------------------");
+            if (choice == 1)
+            {
+               for (int i = 0; i < Game1Reviews.length; i++)
+               {
+                    System.out.println(Game1Reviews[i].displayReview());
+               }
+            }
+            if (choice == 2)
+            {
+               for (int i = 0; i < Game2Reviews.length; i++)
+               {
+                    System.out.println(Game2Reviews[i].displayReview());
+               }
+            }
+             if (choice == 3)
+            {
+               for (int i = 0; i < Game3Reviews.length; i++)
+               {
+                    System.out.println(Game3Reviews[i].displayReview());
+               }
+            }
+              if (choice == 4)
+            {
+               for (int i = 0; i < Game4Reviews.length; i++)
+               {
+                    System.out.println(Game4Reviews[i].displayReview());
+               }
+            }
+               if (choice == 5)
+            {
+               for (int i = 0; i < Game5Reviews.length; i++)
+               {
+                    System.out.println(Game5Reviews[i].displayReview());
+               }
+            }
         }
     }
     
-    //PAYMENT
-    int cost= 50;
+    //TOP UP ACCOUNT WALLET
+   public static void topup()
+   {
+       int topupChoice;
+       Scanner sc = new Scanner(System.in);
     
-    
-    }
+       //print account wallet info
+       System.out.print(AccountWallet.class.toString());
+       System.out.println("Please Select a Top-Up option below:");
+       System.out.println("1. RM 10");
+       System.out.println("2. RM 20");
+       System.out.println("3. RM 50");
+       System.out.println("\n0. Exit");
+       
+       topupChoice = sc.nextInt();
+       
+       //VALIDATE
+       while (topupChoice < 0 || topupChoice > 4)
+        {
+            System.out.print("\n   [Invalid Option!]" + "\n   Please Re-enter your choice (1-5): ");
+            topupChoice = sc.nextInt();
+        }
+       
+       //
+       
+   }
+   
 }
+
