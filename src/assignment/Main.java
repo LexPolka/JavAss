@@ -221,7 +221,7 @@ public class Main
     }
    
     public static void topUp()
-   {
+    {
         String topupInput;
         double amount;
         AccountWallet wallet = new AccountWallet();
