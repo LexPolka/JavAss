@@ -16,8 +16,8 @@ public class Cart extends Game {
         super(gameID, gameName, price);
     }
     
-    public String selectedgameName(String selectedgameName){
-        return selectedgameName;
+    public double totalPrice(){
+        return totalPrice;
     }
    
     
