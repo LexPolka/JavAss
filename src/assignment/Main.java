@@ -213,6 +213,8 @@ public class Main
         proceed = sc.next().charAt(0);
         sc.nextLine();
     }while( proceed == 'Y');
+
+        
     }
    
    public static void gameMenu(){
@@ -220,6 +222,7 @@ public class Main
         System.out.println(menu.toString());
     }
    
+   //TOP UP
     public static void topUp()
     {
         String topupInput;
@@ -244,6 +247,7 @@ public class Main
        
    }
    
+    // ADD A CREDIT CARD
    public static void addBank()
    {
         String cardNumber;
@@ -289,5 +293,12 @@ public class Main
         return matcher.matches();
     }
    
+   //ORDER FUNCTION
+   public static void ordering(double cartTotal)
+   {
+       Order order = new Order(cartTotal);
+       
+       System.out.println(order.toString());
+   }
 }
 
