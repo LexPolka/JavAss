@@ -1194,6 +1194,7 @@ public static int MainMenu()
         System.out.println("                              Have a nice day!                               ");
 
     }
+    
     public static int[] getQuantity(int whichGame){
 
         ArrayList<Game> gameList = new ArrayList();
@@ -1206,7 +1207,6 @@ public static int MainMenu()
         quantity[whichGame] += 1;
 
         return quantity;
-
     }
     
    //EXIT
