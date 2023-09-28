@@ -70,7 +70,7 @@ public class Game {
     {
         this.price = newPrice;
     }
-    public void setgameGenre(String gameGenre){
+    public void setGenre(String gameGenre){
         this.gameGenre = gameGenre;
     }
     public Game(String gameID, String gameName, double price){

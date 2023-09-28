@@ -19,16 +19,15 @@ public class Order {
     //calculation
     protected double subTotal;
     protected double total;
+    protected double taxPrice;
     
     private static int numOrderID= 1001;
     private static int tax = 5;
     
-    public Order(double cartTotal)
-    {
-        this.subTotal = cartTotal;
-        numOrderID++;
+      
+    public Order(){
+        
     }
-    
     public Order (double cartTotal, String orderID, String orderStatus, String orderDesc)
     {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");  
@@ -39,27 +38,22 @@ public class Order {
         this.orderDesc = orderDesc;
         numOrderID++;
     }
-    
-    //Functions
-    @Override
-    public String toString()
+    //USE FOR CALCULATING THE PRICE IN MAIN
+    public void calculateFinal(double cartTotal)
     {
-        this.total = this.subTotal * 1.05;
-        
-        return String.format(
-                """
-                        == Processing Order... ==
-                    Order ID            : %s
-                    Order Date          : %s
-                    Order Desc          :
-                        %s
-                    ---------------------------------
-                
-                    Sub Total           : %.2f
-                    Tax 5%
-                    Total (After Tax)   : %.2f
-                                        """, this.orderID, this.orderDate, this.orderDesc, this.subTotal, this.total);
+        this.total = cartTotal + (cartTotal * tax /100);
     }
+    public void calculateTax(double cartTotal)
+    {
+        this.taxPrice = cartTotal * tax /100;
+    }
+    public double getTotal(){
+        return total;
+    }
+    public double getSubTotal(){
+        return subTotal;
+    }
+    //Functions
     
     public String getOrderID()
     {
@@ -88,5 +82,24 @@ public class Order {
     public void setOrderDesc(String newOrderDesc)
     {
         this.orderDesc = newOrderDesc;
+    }
+    public void setSubTotal(double subTotal){
+        this.subTotal = subTotal;
+    }
+    
+    @Override
+    public String toString()
+    {
+        this.total = this.subTotal * 1.05;
+        
+        return String.format("""
+                             ====== Your Order ======
+                               Order number  > %s
+                               Order Date    > %s
+                               Order Desc    >
+                               Subtotal      > %.2f
+                               Tax Rate(5%%)  > %.2f
+                               Total         > %.2f
+                             """, orderID,orderDate,subTotal, taxPrice, total);
     }
 }
