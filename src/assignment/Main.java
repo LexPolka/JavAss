@@ -1192,7 +1192,8 @@ public static int MainMenu()
         System.out.println("Total :                                                                      ");
         System.out.println("=============================================================================");
         System.out.println("                              Have a nice day!                               ");
-
+        
+        StaffMenu();
     }
     
     public static int[] getQuantity(int whichGame){
