@@ -23,6 +23,7 @@ public class Main
         // this is a test
         // GAMES
         ArrayList<Game> gameList = new ArrayList();
+        ArrayList<Cart> cartList = new ArrayList();
         Order order = new Order();
         double total = 0;
          
@@ -70,13 +71,13 @@ public class Main
             case 1:
                 //GAME ON SALES
                 filereadingGame(gameList);
-                order.setSubTotal(gameSelection(gameList));
+                order.setSubTotal(gameSelection(gameList, cartList));
                 break;
             case 2:
                 //VIEW CART CONTENT
                 total = viewOrder(order.getSubTotal());
                 System.out.printf("Your total price is....  %.2f\n\n", total );
-                CartMenu();
+                CartMenu(cartList);
                 break;
             case 3:
                 topUp();
@@ -96,7 +97,7 @@ public class Main
     
      //Retrieving game into the store===================================================================================
   public static ArrayList<Game> filereadingGame(ArrayList<Game> gameList){
-        
+        gameList.clear();
         File gameFile = new File("available_games.txt");
   
         try(Scanner fileread = new Scanner(gameFile)){
@@ -267,8 +268,7 @@ public static int MainMenu()
         }
         
     }
-    public static double gameSelection(ArrayList<Game> gameList){
-        ArrayList<Cart> cartList = new ArrayList();
+    public static double gameSelection(ArrayList<Game> gameList,ArrayList<Cart> cartList ){
         Game game = new Game();
         double totalPrice = 0;
         Scanner sc = new Scanner(System.in);
@@ -325,6 +325,7 @@ public static int MainMenu()
         switch(option)
         {
             case 1:
+                
                 cartList.add(new Cart(game.getGameID(),game.getGameName(), game.getPrice()));
                 System.out.printf("""
                                   ================= Your Cart Content =================
@@ -492,8 +493,9 @@ public static int MainMenu()
         return matcher.matches();
     }
    
-      public static void CartMenu()
+      public static void CartMenu(ArrayList<Cart> cartList)
    {
+        Game game = new Game();
         boolean valid = false;
         Scanner sc = new Scanner(System.in);
         int choice =0;
@@ -507,8 +509,11 @@ public static int MainMenu()
                     ========================================
                       Displaying Cart:
                         """);
-            
             // do your cart thing here !!
+                for(Cart cartprint : cartList)
+                {
+                    System.out.println(cartprint.getGameName()  + "              " + cartprint.getPrice());
+                }
             
             System.out.println(
                     """
