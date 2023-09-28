@@ -15,11 +15,10 @@ public class Game {
     protected double price;
     protected String gameGenre;
     protected String gameDesc;
-    private static int numGameID= 1001;
     
     //Functions
     public Game(){
-        numGameID++;
+        
     }
     
     //Constructor

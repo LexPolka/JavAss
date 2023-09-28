@@ -478,6 +478,23 @@ public class Main
     //Adding new game(ONLY FOR STAFF)================================================================================
   
      public static void fileWritingGame(){
+         ArrayList<Game> gameList = new ArrayList();
+         filereadingGame(gameList);
+            //get latest id
+            //get latest element
+            int lastIndex = gameList.size() - 1;
+            Game lastestGame = gameList.get(lastIndex);
+             // extract id
+            String tempID = lastestGame.getGameID();
+
+            //extract number part of string
+            tempID = tempID.substring(1);
+
+            //change it to int
+            int tempIDnum = Integer.parseInt(tempID);
+            ++tempIDnum;
+            //combine to get new id
+            String IDholder = ("G" + (tempIDnum));
         Scanner sc = new Scanner(System.in);
         char comfirmation;
         Game game = new Game();
@@ -534,9 +551,12 @@ public class Main
             sc.nextLine();
             System.out.printf("\nNew Game Description: ");
             game.setGameDesc(sc.nextLine());
+            
+            
         
         try{
         FileWriter writegame = new FileWriter("available_games.txt", true);
+        game.setGameID(IDholder);
         writegame.write(String.format("%s|%s|%.2f|%s|%s\n", game.getGameID(), game.getGameName(), game.getPrice(), game.getGenre(), game.getGameDesc()));
         writegame.close();
         }
@@ -556,7 +576,7 @@ public class Main
         
         }while(Character.toUpperCase(comfirmation) == 'Y' || Character.toUpperCase(comfirmation) != 'N');
     }
-     
+    
      //DISPLAY THE MAIN MENU =======================================================================
 public static int MainMenu()
    {
