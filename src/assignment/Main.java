@@ -272,10 +272,12 @@ public class Main
             switch(staffChoice){
                 case 1:
                     fileWritingGame();
+                    break;
                 case 2:
                     int whichGame = 0;
                     int[] quantity = getQuantity(whichGame);
                     summaryReport(quantity);
+                    break;
                 case 3:
                     ExitProgram();
                 default:
@@ -925,7 +927,7 @@ public static int MainMenu()
             // do your cart thing here !!
                 for(Cart cartprint : cartList)
                 {
-                    System.out.printf("%-30s         %10.2f\n", cartprint.getGameName(), cartprint.getPrice());
+                    System.out.printf("%-25s         %8.2f\n", cartprint.getGameName(), cartprint.getPrice());
                 }
             
             System.out.println(
