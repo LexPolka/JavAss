@@ -9,22 +9,24 @@ package assignment;
  * @author admin
  */
 public class AccountWallet {
-    protected int walletID;
+    protected String walletID;
     protected double walletAmount;
     
-    private int lastID;
+    private static int numAccountID = 1001;
     
     public AccountWallet()
     {
+        this.walletID = "AW" + numAccountID;
         
+        numAccountID++;
     }
     
     public AccountWallet(double walletAmount)
     {
-        this.walletID = lastID;
+        this.walletID = "AW" + numAccountID;
         this.walletAmount = walletAmount;
         
-        lastID++;
+        numAccountID++;
     }
     
     @Override
@@ -43,7 +45,7 @@ public class AccountWallet {
         return walletAmount;
     }
     
-    public int getID()
+    public String getID()
     {
         return walletID;
     }

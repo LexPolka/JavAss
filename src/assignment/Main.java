@@ -16,6 +16,9 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Main 
 {   
@@ -42,14 +45,7 @@ public class Main
         Game5Reviews[0] = new Review("Markus#sigma", "well, i tried");
         Game5Reviews[1] = new Review("Android#182", "I LOVE THIS GAME!");
         Game5Reviews[2] = new Review("Markiplier#87", "Hello everybody my name is Markiplier.");
-        
-        // CART
-        
-        // PAYMENT
-        AccountWallet[] wallet = new AccountWallet[100];
-        wallet[0] = new AccountWallet(100);
-        wallet[1] = new AccountWallet(200);
-        wallet[2] = new AccountWallet(300);
+
         
 // SYSTEM STARTS HERE ===================================================== !!!!!        
 
@@ -90,10 +86,6 @@ public class Main
             System.out.println("Enter choice >");
             int userChoice = scanner.nextInt(); //userchoice for switch
         
-
-            
-            
-            
             switch(userChoice) {
             case 1:
                 System.out.println("Type exit to return to title screen");
@@ -109,9 +101,6 @@ public class Main
                 
                 System.out.print("Thanks for coming!");
                 exitChoice = true;
-                
-            default:
-                throw new AssertionError();
         }
         } while (!exitChoice);
                
@@ -120,7 +109,10 @@ public class Main
     } // end of main
     
     public static void chkUsrOrStf(){
-        
+        //Create New Account Wallet, find change for customer when they exit program
+        AccountWallet wallet = new AccountWallet();
+        //Create Credit Card
+        Credit card = new Credit();
         ArrayList<Customer> cusLogin = new ArrayList<Customer>();
         filereadingCusData(cusLogin);
         
@@ -245,7 +237,7 @@ public class Main
 
                                        if (userInput2.equals(pwHolder)) {
                                            System.out.println("Login Success!");
-                                           CustomerMainMenu(cartList, gameList);
+                                           CustomerMainMenu(cartList, gameList, wallet, card);
                                            loopingMain = true;
                                            looping1 = true;
                                            passwChk2 = true;
@@ -302,10 +294,7 @@ public class Main
                 
             }
             
-        }
-        
-        
-        
+        }  
     }
     
     
@@ -425,9 +414,10 @@ public class Main
     }
   
     
-    public static void CustomerMainMenu(ArrayList<Cart> cartList, ArrayList<Game> gameList)
+    // CUSTOMER MAIN MENU STARTS HERE
+    public static void CustomerMainMenu(ArrayList<Cart> cartList, ArrayList<Game> gameList, AccountWallet wallet, Credit card)
     {   
-        // GAMES
+        //Create Order Object
         Order order = new Order();
         double total = 0;
 
@@ -441,21 +431,18 @@ public class Main
             case 1:
                 //GAME ON SALES
                 filereadingGame(gameList);
-                order.setSubTotal(gameSelection(gameList, cartList));
+                order.setSubTotal(gameSelection(gameList, cartList, wallet, card));
                 break;
             case 2:
                 //VIEW CART CONTENT
                 total = viewOrder(order.getSubTotal());
                 System.out.printf("Your total price is....  %.2f\n\n", total );
-                CartMenu(cartList, gameList);
+                CartMenu(cartList, gameList, wallet, card, order.getSubTotal());
                 break;
             case 3:
-                topUp();
-                break;
-            case 4:
-                addBank();
-                break;  
-            case 5:
+                topUp(wallet);
+                break; 
+            case 0:
                 ExitProgram();
         }
         choice = exitprog;
@@ -569,6 +556,7 @@ public class Main
         
         }while(Character.toUpperCase(comfirmation) == 'Y' || Character.toUpperCase(comfirmation) != 'N');
     }
+     
      //DISPLAY THE MAIN MENU =======================================================================
 public static int MainMenu()
    {
@@ -588,9 +576,9 @@ public static int MainMenu()
                       Welcome to Main Menu!
                       1. Games on Sale
                       2. Open Cart
-                      3. Add Bank Account
-                      4. Top-Up Wallet
-                      5. Exit Program
+                      3. Top-Up Wallet
+
+                      0. Exit Program
                         """);
             
             
@@ -598,10 +586,10 @@ public static int MainMenu()
             try
             {   choice = sc.nextInt();
                 
-                if (choice < 1 || choice > 5){
+                if (choice < 0 || choice > 3){
                 valid = false;
                 System.out.println("Enter value is not in range with the option!");
-                System.out.println("Only enter number from 1 - 4 !");
+                System.out.println("Only enter number from 0 - 3 !");
                 }
                 else
                 valid = true;
@@ -639,7 +627,7 @@ public static int MainMenu()
         }
         
     }
-    public static double gameSelection(ArrayList<Game> gameList,ArrayList<Cart> cartList ){
+    public static double gameSelection(ArrayList<Game> gameList,ArrayList<Cart> cartList, AccountWallet wallet, Credit card){
         Game game = new Game();
         double totalPrice = 0;
         Scanner sc = new Scanner(System.in);
@@ -662,7 +650,7 @@ public static int MainMenu()
            }
            else if (option == 0)
            {
-               CustomerMainMenu(cartList, gameList);
+               CustomerMainMenu(cartList, gameList, wallet, card);
            }
            else{
               int lastIndex = gameList.size() - 1;
@@ -757,7 +745,7 @@ public static int MainMenu()
                 menucontent(gameList);
                 
         }
-        System.out.println("\n Continue Looking For Game? > ");
+        System.out.println("\n Continue Looking For Games? (Y/N) > ");
         proceed = sc.next().charAt(0);
         sc.nextLine();
         
@@ -800,17 +788,16 @@ public static int MainMenu()
     }
    
    //TOP UP
-    public static void topUp()
+    public static void topUp(AccountWallet wallet)
     {
         String topupInput;
         double amount;
-        AccountWallet wallet = new AccountWallet();
 
         Scanner sc = new Scanner(System.in);
 
         //print account wallet info
-        System.out.print(wallet.toString());
-        System.out.println("Please input amount to Top-Up below: ");
+        System.out.println(wallet.toString());
+        System.out.println("\nPlease input amount to Top-Up below: ");
         System.out.println("Do 'X' to Exit");
 
         topupInput = sc.nextLine();
@@ -821,40 +808,98 @@ public static int MainMenu()
             wallet.increase(amount);
             System.out.println(" Your Current Balance is: " + wallet.checkBalance());
         }
-       
    }
    
     // ADD A CREDIT CARD
-   public static void addBank()
+   public static void addBank(ArrayList<Cart> cartList, ArrayList<Game> gameList, AccountWallet wallet, Credit card)
    {
         String cardNumber;
         String cardType;
-        boolean valid = false;
+        String cardExpDate;
+        boolean validNumber = false;
+        boolean validType = false;
+        boolean validDate = false;
         Scanner sc = new Scanner(System.in);
         System.out.println("== Adding Bank Account ============================="
-                        + "\n Enter Bank Associated with Account > "
-                        );
-       
-        cardType = sc.next();
-       
-        System.out.println(" Enter Bank Account Number (8 digits) > "
-                        );
-      
-        cardNumber = sc.next();
-        
+                        + "\nDo 'X' to Exit To Main Menu"
+                        + "\n Enter Bank Associated with Account > ");
         do
         {
-            if (isEightDigits(cardNumber))
+            cardType = sc.nextLine();
+            
+            if (cardType.equalsIgnoreCase("X"))
             {
-                valid = true;
+                CustomerMainMenu(cartList, gameList, wallet, card);
             }
             else
             {
-                valid = false;
+                validType = true;
+            }
+        } while (validType = false);
+        
+        System.out.println(" Enter Bank Account Number (8 digits) > ");
+        
+        do
+        {
+            cardNumber = sc.next();
+            if (cardNumber.equalsIgnoreCase("X"))
+            {
+                CustomerMainMenu(cartList, gameList, wallet, card);
+            }
+            else if (isEightDigits(cardNumber))
+            {
+                validNumber = true;
+            }
+            else 
+            {
+                validNumber = false;
                 System.out.println("Invalid Card Number! Must be at least 8 Digits!");
             }
-        } while (valid == false);
+        } while (validNumber == false);
+        
+        System.out.println(" Enter Card Expiration Date (MM/YY) > ");
+        
+        do
+        {
+            cardExpDate = sc.next();
+            if (cardExpDate.equalsIgnoreCase("X"))
+            {
+                CustomerMainMenu(cartList, gameList, wallet, card);
+            }
+            else if (isValidDate(cardExpDate))
+            {
+                validDate = true;
+            }
+            else 
+            {
+                validDate = false;
+                System.out.println("Invalid Expiration Date! Use Format: MM/YY");
+            }
+        } while (validDate == false);
+        
+        // SAVE ALL CREDIT CARD INFO INTO CARD THEN BACK TO MAIN
+        card.setNumber(cardNumber);
+        card.setType(cardType);
+        card.setExpDate(cardExpDate);
+        //print
+        System.out.println("Successfully Added a Credit Card!");
+        System.out.println(card.toString());
+        
    }
+   
+   public static boolean isValidDate(String dateStr) {
+        // Define the regular expression pattern for MM/YY format
+        String patternStr = "^\\d{2}/\\d{2}$";
+
+        // Create a Pattern object
+        Pattern pattern = Pattern.compile(patternStr);
+
+        // Create a Matcher object
+        Matcher matcher = pattern.matcher(dateStr);
+
+        return matcher.matches();
+    }
+
    
    public static boolean isEightDigits(String input) {
         // Define a regular expression pattern for 8 digits
@@ -870,7 +915,7 @@ public static int MainMenu()
         return matcher.matches();
     }
    
-      public static void CartMenu(ArrayList<Cart> cartList, ArrayList<Game> gameList)
+      public static void CartMenu(ArrayList<Cart> cartList, ArrayList<Game> gameList, AccountWallet wallet, Credit card, double total)
    {
         Game game = new Game();
         boolean valid = false;
@@ -906,10 +951,10 @@ public static int MainMenu()
             {   
                 choice = sc.nextInt();
                 
-                if (choice < 1 || choice > 5){
+                if (choice < 1 || choice > 2){
                 valid = false;
                 System.out.println("Enter value is not in range with the option!");
-                System.out.println("Only enter number from 1 - 3 !");
+                System.out.println("Only enter number from 1 - 2 !");
                 }
                 else
                 valid = true;
@@ -924,16 +969,190 @@ public static int MainMenu()
         //choice
         switch(choice){
             case 1:
-                //PROCEED WITH CHECKOUT
-                //
-                //
+                //ALOYSIUS IF CART IS EMPTY DO THIS, IF NOT DO THAT ty ty :3
+                //if cart is empty, do this
+                //CartMenu(cartList, gameList, wallet, card, total);
+                
+                //do this if cart isnt empty
+                PaymentMenu(cartList, gameList, wallet, card, total);
                 break;
             case 2:
-                CustomerMainMenu(cartList, gameList);
+                CustomerMainMenu(cartList, gameList, wallet, card);
                 break;
         }
    }
-   
+      
+   //PAYMENT
+    public static void PaymentMenu(ArrayList<Cart> cartList, ArrayList<Game> gameList, AccountWallet wallet, Credit card, double total)
+    {
+        int choice= 0;
+        boolean valid = false;
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.println("""
+                           ====================================================
+                                 O===                                    
+                                 |___] ___       ___ ___  ___ ___     |  
+                                 |    |___| |__} |  |  | |___ |  |  ==|==
+                                 |    |   |  __| |  |  | |___ |  |    |_
+                           ====================================================
+                           """);
+        do{
+            System.out.printf("""
+                      Select Payment Type:
+                     1. Credit Card
+                     2. Account Wallet
+                        """);
+            
+        //validate
+            try
+            {   
+                choice = sc.nextInt();
+                
+                if (choice < 1 || choice > 2){
+                valid = false;
+                System.out.println("Enter value is not in range with the option!");
+                System.out.println("Only enter number from 1 - 2 !");
+                }
+                else
+                valid = true;
+            }
+            catch(Exception ex){
+                valid = false;
+                sc.nextLine();
+                System.out.println("Only Enter number!");
+            }
+        } while (valid == false);
+        
+        //choice
+        switch(choice)
+        {
+            case 1:
+                addBank(cartList, gameList, wallet, card);
+                break;
+            case 2:
+                //tell them your wallet balance
+                System.out.println("\nYour Wallet Balance: " + wallet.checkBalance());
+                System.out.println("Total Price        : " + total);
+                //proceed?
+                choice = 0;
+                valid = false;
+                do{
+                    System.out.println("""
+                            1. Yes, pay with Account Wallet.
+                            2. Cancel, return to Main Menu.
+                                """);
+
+                //validate
+                    try
+                    {   
+                        choice = sc.nextInt();
+
+                        if (choice < 1 || choice > 2){
+                        valid = false;
+                        System.out.println("Enter value is not in range with the option!");
+                        System.out.println("Only enter number from 1 - 2 !");
+                        }
+                        else
+                        valid = true;
+                    }
+                    catch(Exception ex){
+                        valid = false;
+                        sc.nextLine();
+                        System.out.println("Only Enter number!");
+                    }
+                } while (valid == false);
+                if (choice == 1)
+                {
+                    if (ValidateSufficientFunds(wallet.checkBalance(), total))
+                    {
+                        //SUCESSFUL PAYMENT
+                        System.out.println("Successful Payment!");
+                        
+                        //ALOYSIUS ADD THE SHOW CART and CLEAR CART HERE
+                        
+                        //RETURN TO MAIN MENU
+                        CustomerMainMenu(cartList, gameList, wallet, card);
+                    }
+                    else
+                    {
+                        //FAILED PAYMENT
+                        FailedPaymentMenu(cartList, gameList, wallet, card, total);
+                    }
+                }
+                if (choice == 2)
+                {
+                    CustomerMainMenu(cartList, gameList, wallet, card);
+                }
+                break;
+        }
+    }
+    
+    public static boolean ValidateSufficientFunds(double balance, double price)
+    {
+        if (balance >= price)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
+    public static void FailedPaymentMenu(ArrayList<Cart> cartList, ArrayList<Game> gameList, AccountWallet wallet, Credit card, double total)
+    {
+        boolean valid = false;
+        int choice = 0;
+        Scanner sc = new Scanner(System.in);
+        
+        do{
+            System.out.println("""
+                                Insufficient Funds!!
+                                Please select another option:
+                                1. Top-Up Account Wallet
+                                2. Return to Main Menu
+                                3. Return to Cart Menu
+                                4. Retry Payment Methods
+                            """);
+            
+            //validate
+            try
+            {   
+                choice = sc.nextInt();
+                
+                if (choice < 1 || choice > 4){
+                valid = false;
+                System.out.println("Enter value is not in range with the option!");
+                System.out.println("Only enter number from 1 - 4 !");
+                }
+                else
+                valid = true;
+            }
+            catch(Exception ex){
+                valid = false;
+                sc.nextLine();
+                System.out.println("Only Enter number!");
+            }
+        }   while (valid == false);
+        
+        //choice
+        switch(choice){
+            case 1:
+                topUp(wallet);
+                break;
+            case 2:
+                CustomerMainMenu(cartList, gameList, wallet, card);
+                break;
+            case 3:
+                CartMenu(cartList, gameList, wallet, card, total);
+                break;
+            case 4:
+                PaymentMenu(cartList, gameList, wallet, card, total);
+                break;
+        }
+    }
+    
    //EXIT
     public static void ExitProgram()
     {
