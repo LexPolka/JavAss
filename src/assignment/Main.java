@@ -177,7 +177,7 @@ public class Main
             game.setGameDesc(sc.nextLine());
         
         try{
-        FileWriter writegame = new FileWriter("available_games.txt");
+        FileWriter writegame = new FileWriter("available_games.txt", true);
         writegame.write(String.format("%s|%s|%.2f|%s|%s\n", game.getGameID(), game.getGameName(), game.getPrice(), game.getGenre(), game.getGameDesc()));
         writegame.close();
         }
