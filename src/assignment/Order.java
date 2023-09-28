@@ -47,7 +47,7 @@ public class Order {
         return total;
     }
     public double getSubTotal(){
-        return subTotal;
+        return this.subTotal;
     }
     //Functions
     
@@ -79,6 +79,9 @@ public class Order {
     {
         this.orderDesc = newOrderDesc;
     }
+    public void increaseSubTotal(double subTotal){
+        this.subTotal += subTotal;
+    }
     public void setSubTotal(double subTotal){
         this.subTotal = subTotal;
     }
@@ -89,7 +92,7 @@ public class Order {
         this.total = this.subTotal * 1.05;
         
         return String.format("""
-                             ====== Your Order ======
+                             \n====== Your Order ======
                                Order number  > %s
                                Order Date    > %s
                                Order Desc    >
