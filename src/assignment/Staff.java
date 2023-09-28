@@ -10,8 +10,10 @@ package assignment;
  */
 public class Staff extends User{
     //Constructor
+    private int quantity;
     public Staff(String userID, String userPw, String userEmail)
     {
         super(userID, userPw, userEmail);
     }
+   
 }

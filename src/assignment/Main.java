@@ -702,13 +702,14 @@ public static int MainMenu()
                                   Game Name                        Price
                         
                                   """);
-                for(Cart cartprint : cartList)
+                  for(Cart cartprint : cartList)
                 {
-                    System.out.println(cartprint.getGameName()  + "              " + cartprint.getPrice());
+                    System.out.printf("%-30s         %10.2f\n",cartprint.getGameName(), cartprint.getPrice());
                 }
                 totalPrice += game.getPrice();
-                System.out.println("Total price:                    " + totalPrice);
-                break;
+                System.out.println("--------------------------------------------------");
+                System.out.printf("\nTotal price:                           %10.2f\n ",totalPrice);
+                break; 
             case 2:
                     System.out.println("\n  Showing recent reviews:" + "\n  -------------------------");
            /* if (choice == 1)
