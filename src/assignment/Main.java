@@ -20,14 +20,6 @@ public class Main
 {   
     public static void main(String[] args) 
     {
-        // this is a test
-        // GAMES
-        ArrayList<Game> gameList = new ArrayList();
-        ArrayList<Cart> cartList = new ArrayList();
-        Order order = new Order();
-        double total = 0;
-         
-        
         // REVIEWS
         Review[] Game1Reviews = new Review[10];
         Game1Reviews[0] = new Review("Markiplier#87", "This game is lowkey amazing!");
@@ -60,6 +52,17 @@ public class Main
         
 // SYSTEM STARTS HERE ===================================================== !!!!!        
 
+        ArrayList<Game> gameList = new ArrayList();
+        ArrayList<Cart> cartList = new ArrayList();
+        MainMainMenu(cartList, gameList);
+    }
+    
+    public static void MainMainMenu(ArrayList<Cart> cartList, ArrayList<Game> gameList)
+    {   
+        // GAMES
+        Order order = new Order();
+        double total = 0;
+
         //Variables
         //main menu after customer login
         fileWritingGame();
@@ -77,7 +80,7 @@ public class Main
                 //VIEW CART CONTENT
                 total = viewOrder(order.getSubTotal());
                 System.out.printf("Your total price is....  %.2f\n\n", total );
-                CartMenu(cartList);
+                CartMenu(cartList, gameList);
                 break;
             case 3:
                 topUp();
@@ -90,9 +93,6 @@ public class Main
         }
         choice = exitprog;
         }while(exitprog != 5);
-        
-        
-   
     }
     
      //Retrieving game into the store===================================================================================
@@ -276,7 +276,9 @@ public static int MainMenu()
         char proceed;
       do{
         menucontent(gameList);
-        System.out.printf("Select a game > ");
+        System.out.printf(
+                      "\n0) Exit Game Menu" +
+                      "\nSelect a game > ");
         boolean input = false;
        
        while(!input){
@@ -286,6 +288,10 @@ public static int MainMenu()
                option--;
                game = gameList.get(option);
                input = true;
+           }
+           else if (option == 0)
+           {
+               MainMainMenu(cartList, gameList);
            }
            else{
               int lastIndex = gameList.size() - 1;
@@ -493,7 +499,7 @@ public static int MainMenu()
         return matcher.matches();
     }
    
-      public static void CartMenu(ArrayList<Cart> cartList)
+      public static void CartMenu(ArrayList<Cart> cartList, ArrayList<Game> gameList)
    {
         Game game = new Game();
         boolean valid = false;
@@ -508,6 +514,7 @@ public static int MainMenu()
                           o====o |  |  [     |_
                     ========================================
                       Displaying Cart:
+                     Name                           Price
                         """);
             // do your cart thing here !!
                 for(Cart cartprint : cartList)
@@ -520,8 +527,7 @@ public static int MainMenu()
                     ========================================
                         Please pick an option:
                     1. Proceed with Checkout Order
-                    2. Return to Games on Sale
-                    3. Return to Main Menu
+                    2. Return to Main Menu
                         """);
             
             //validate
@@ -552,15 +558,9 @@ public static int MainMenu()
                 //
                 break;
             case 2:
-                //GO TO GAMES
-                //
-                //
-                break;
-            case 3:
-                MainMenu();
+                MainMainMenu(cartList, gameList);
                 break;
         }
-
    }
    
    //EXIT
@@ -570,4 +570,3 @@ public static int MainMenu()
         System.exit(0);
     }
 }
-
