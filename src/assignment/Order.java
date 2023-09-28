@@ -25,17 +25,13 @@ public class Order {
     private static int tax = 5;
     
       
-    public Order(){
-        
-    }
-    public Order (double cartTotal, String orderID, String orderStatus, String orderDesc)
+    public Order()
     {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");  
-        Date date = new Date();  
-        
+        SimpleDateFormat formatter = new SimpleDateFormat("YYYY-MM-DD");
+        Date date = new Date(); 
+
         this.orderID = "O" + numOrderID;
         this.orderDate = date;
-        this.orderDesc = orderDesc;
         numOrderID++;
     }
     //USE FOR CALCULATING THE PRICE IN MAIN
