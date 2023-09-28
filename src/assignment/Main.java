@@ -62,24 +62,31 @@ public class Main
             System.out.println("            2. LOGIN");        
             System.out.println("            3. EXIT");
             System.out.printf("\n          Enter choice > ");
-            int userChoice = scanner.nextInt(); //userchoice for switch
-        
-            switch(userChoice) {
+            try{ //userchoice for switch
+            int userChoice = scanner.nextInt();
+            switch(userChoice) 
+            {
             case 1:
-                System.out.println("Type 'exit' to return to title screen");
+                System.out.println("    [?] Type exit to return to title screen");
                 fileWritingCustomer();
                 break;
 
             case 2:
-                // call login function            
+                // call login function
                 chkUsrOrStf();
-                  
+
                 break;
             case 3:
-                
-                System.out.print("Thanks for coming!");
+
+                System.out.print("    Thanks for coming!~");
                 exitChoice = true;
-        }
+            }
+          }
+          catch(Exception ex)
+          {
+              scanner.nextLine();
+              System.out.println("    [ Error! Please Only Insert integer ]");
+          }
         } while (!exitChoice);
                
     
@@ -250,27 +257,33 @@ public class Main
           
            
 }
+
     public static void StaffMenu(){
         Scanner sc = new Scanner(System.in);
         boolean staffLooper = false;
         while(!staffLooper){
             System.out.println("        Please select a Staff Option?");
             System.out.println("        1. Add Game");
-            System.out.println("        2. Exit Program");
+            System.out.println("        2. View Report");
+            System.out.println("        3. Exit Program");
 
             int staffChoice = sc.nextInt();
-                
+
             switch(staffChoice){
                 case 1:
                     fileWritingGame();
                 case 2:
+                    int whichGame = 0;
+                    int[] quantity = getQuantity(whichGame);
+                    summaryReport(quantity);
+                case 3:
                     ExitProgram();
                 default:
                     System.out.printf("\n[ Error ! Invalid Choice ]");
-                
+
             }
-            
-        }  
+
+        }
     }
 
     //READ CUSTOMER DATAFILE
@@ -456,22 +469,51 @@ public class Main
     //Adding new game(ONLY FOR STAFF)================================================================================
   
      public static void fileWritingGame(){
+       char comfirmation;
         Scanner sc = new Scanner(System.in);
-        char comfirmation;
-        Game game = new Game();
-        System.out.println("Add new game? (Y/N)> ");
-        
-        
-        do{
-         comfirmation = sc.next().charAt(0);
-         
+        System.out.println("Add game comfirm? (Yes = Y)(No = N) >");
+        do {
+            ArrayList<Game> gameList = new ArrayList();
+            filereadingGame(gameList);
+
+            //get latest id
+            //get latest element
+            int lastIndex = gameList.size() - 1;
+            Game latestGame = gameList.get(lastIndex);
+
+            // extract id
+            String tempID = latestGame.getGameID();
+
+            //extract number part of string
+            tempID = tempID.substring(1);
+
+            //change it to int
+            int numID = Integer.parseInt(tempID);
+            ++numID;
+            //combine to get new id
+            String newGameID = ("G" + (numID));
+
+            Game game = new Game(); 
+            game.setGameID(newGameID);
+            comfirmation = sc.next().charAt(0);
         if(Character.toUpperCase(comfirmation) == 'Y')
         {           
-            
+            boolean priceValid = false;
             sc.nextLine();
             System.out.printf("\nNew Game Name: ");
             game.setGameName(sc.nextLine());
             System.out.printf("\nNew Game Price: ");
+            while(priceValid = false){
+            try{
+                game.setPrice(sc.nextDouble());
+                priceValid = true;
+            }
+            catch(Exception ex){
+                sc.nextLine();
+                System.out.println("Only insert numbers!");
+                priceValid = false;
+            }
+            }
             game.setPrice(sc.nextDouble());
             System.out.printf("""
                               New Game Genre (Enter the number for a Genre)
@@ -622,6 +664,10 @@ public static int MainMenu()
            if(option >= 1 && option <= gameList.size()){
                option--;
                game = gameList.get(option);
+               
+               //for summary report
+               getQuantity(option);
+               
                input = true;
            }
            else if (option == 0)
@@ -1119,6 +1165,48 @@ public static int MainMenu()
                 PaymentMenu(cartList, gameList, wallet, card, order, total);
                 break;
         }
+    }
+    
+    //SUMMARY REPORT
+    public static void summaryReport(int[] quant){
+
+
+        ArrayList<Game> gameList = new ArrayList();
+        filereadingGame(gameList);
+
+        // Display the summary report for each customer
+        System.out.println("                           Welcome to Summary Report!                        ");
+        System.out.println("=============================================================================");
+        System.out.println("Games                         Quantity Sold                            Amount");
+        for (int i = 0; i < gameList.size(); i++) {
+        Game game = gameList.get(i); // Get the Game object at index i
+        int quantitySold = quant[i]; // Get the quantity sold from the quant array
+
+        String gameName = game.getGameName();
+        double price = game.getPrice();
+        double amount = price * quantitySold;
+
+        System.out.printf("\n%-30s %-20d %.2f%n\n", gameName, quantitySold, amount);
+        }
+
+        System.out.println("Total :                                                                      ");
+        System.out.println("=============================================================================");
+        System.out.println("                              Have a nice day!                               ");
+
+    }
+    public static int[] getQuantity(int whichGame){
+
+        ArrayList<Game> gameList = new ArrayList();
+        filereadingGame(gameList);
+
+        //quantity for summary
+        int sizeHolder = gameList.size() - 1;
+        int[] quantity = new int[sizeHolder];
+        //increment quantity
+        quantity[whichGame] += 1;
+
+        return quantity;
+
     }
     
    //EXIT
