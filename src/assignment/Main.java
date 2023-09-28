@@ -53,10 +53,7 @@ public class Main
         
 // SYSTEM STARTS HERE ===================================================== !!!!!        
 
-        ArrayList<Game> gameList = new ArrayList();
-        ArrayList<Cart> cartList = new ArrayList();
         titleScreen();
-        CustomerMainMenu(cartList, gameList);
     }
     
     public static void titleScreen() {
@@ -126,6 +123,9 @@ public class Main
         
         ArrayList<Customer> cusLogin = new ArrayList<Customer>();
         filereadingCusData(cusLogin);
+        
+        ArrayList<Game> gameList = new ArrayList();
+        ArrayList<Cart> cartList = new ArrayList();
         
     Scanner scanner = new Scanner(System.in);
     int errorChecking = 0; 
@@ -245,7 +245,7 @@ public class Main
 
                                        if (userInput2.equals(pwHolder)) {
                                            System.out.println("Login Success!");
-                                           MainMenu();
+                                           CustomerMainMenu(cartList, gameList);
                                            loopingMain = true;
                                            looping1 = true;
                                            passwChk2 = true;
@@ -433,7 +433,6 @@ public class Main
 
         //Variables
         //main menu after customer login
-        fileWritingGame();
         int exitprog = 0;
         do{
         int choice = MainMenu();
