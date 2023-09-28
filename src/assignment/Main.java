@@ -716,7 +716,7 @@ public static int MainMenu()
                 cartList.add(new Cart(game.getGameID(),game.getGameName(), game.getPrice()));
                 System.out.println("""
                                   \n================= Your Cart Content =================
-                                  Game Name                        Price
+                                  Game Name                         Price
                         
                                   """);
                   for(Cart cartprint : cartList)
@@ -794,6 +794,7 @@ public static int MainMenu()
         {
             amount = Double.parseDouble(topupInput);
             wallet.increase(amount);
+            System.out.println(" Successful Top-Up!! ");
             System.out.println(" Your Current Balance is: " + wallet.checkBalance());
         }
    }
@@ -919,12 +920,12 @@ public static int MainMenu()
                           o====o |  |  [     |_
                     ========================================
                       Displaying Cart:
-                     Name                           Price
+                     Name                         Price
                         """);
             // do your cart thing here !!
                 for(Cart cartprint : cartList)
                 {
-                    System.out.println(cartprint.getGameName()  + "              " + cartprint.getPrice());
+                    System.out.printf("%-30s         %10.2f\n", cartprint.getGameName(), cartprint.getPrice());
                 }
             
             System.out.println(
@@ -1169,8 +1170,7 @@ public static int MainMenu()
     
     //SUMMARY REPORT
     public static void summaryReport(int[] quant){
-
-
+        
         ArrayList<Game> gameList = new ArrayList();
         filereadingGame(gameList);
 
