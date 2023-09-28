@@ -8,6 +8,10 @@ package assignment;
  *
  * @author admin
  */
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -19,61 +23,9 @@ public class Main
         // this is a test
         // GAMES
         ArrayList<Game> gameList = new ArrayList();
-        ArrayList<Cart> cartList = new ArrayList();
-        Game game = new Game();
-        double totalPrice = 0;
-        Scanner sc = new Scanner(System.in);
-        int option = 0;
-        char proceed;
-         gameList.add(new Game("GA1001","Night in the Woods", 10,"Adventure", 
-                """
-                College dropout Mae Borowski returns home to the
-                     crumbling former mining town of Possum Springs            
-                     Seeking to resume her aimless former life and
-                     reconnect with the friends she left behind.
-                     But things are not the same. Home seems different
-                     now and her friends have grown and changed.
-                     Leaves are falling and the wind is growing colder.
-                     Strange things are happening as the light fades.
-                     And there is something in the woods.
-                     """));
-        gameList.add(new Game("GR1002", "Undertale", 20, "Role Playing", 
-                """
-                Welcome to UNDERTALE. In this RPG, you control
-                     a human who falls underground into the world of monsters.
-                     Now you must find your way out... or stay trapped forever.
-                     ((Healthy Dog is Warning: Game contains imagery
-                     that may be harmful to players with
-                     photosensitive epilepsy or similar condition.
-                     """));
-        gameList.add(new Game("G1003","Hollow Knight", 90 ,"Action / Indie / Adventure", 
-                """
-                Forge your own path in Hollow Knight! An epic action
-                     adventure through a vast ruined kingdom of insects
-                     and heroes. Explore twisting caverns, battle tainted
-                     creatures and befriend bizarre bugs, all in a classic,
-                     hand-drawn 2D style.                                                                    
-                     """));
-        gameList.add(new Game("G1004","Elden Ring", 199, "Action / RPG / Adventure", 
-                """
-                THE NEW FANTASY ACTION RPG. Rise, Tarnished,
-                and be guided by grace to brandish the power of the
-                Elden Ring and become an Elden Lord in the Lands Between.
-                This Game may contain content not appropriate for all
-                ages, or may not be appropriate for viewing at work:
-                [!] Frequent Violence or Gore, General Mature Content
-                                                                  """));
-       gameList.add(new Game("G1005", "Detroit: Become Human", 107, "Adventure / Story Rich",
-               """
-               Detroit 2038. Technology has evolved to a point
-               where human like androids are everywhere.                                                                              
-               They speak, move and behave like human beings,
-               but they are only machines serving humans.
-               This Game may contain content not appropriate for all
-               ages, or may not be appropriate for viewing at work:
-               [!] Frequent Violence or Gore, General Mature Content
-                                                                              """));    
-                
+        Order order = new Order();
+        double total = 0;
+         
         
         // REVIEWS
         Review[] Game1Reviews = new Review[10];
@@ -98,8 +50,7 @@ public class Main
         Game5Reviews[2] = new Review("Markiplier#87", "Hello everybody my name is Markiplier.");
         
         // CART
-        Cart[] cart = new Cart[100];
-
+        
         // PAYMENT
         AccountWallet[] wallet = new AccountWallet[100];
         wallet[0] = new AccountWallet(100);
@@ -109,27 +60,239 @@ public class Main
 // SYSTEM STARTS HERE ===================================================== !!!!!        
 
         //Variables
+        //main menu after customer login
+        fileWritingGame();
+        int exitprog = 0;
         do{
-        gameMenu();
+        int choice = MainMenu();
+        
+        switch(choice){
+            case 1:
+                //GAME ON SALES
+                filereadingGame(gameList);
+                order.setSubTotal(gameSelection(gameList));
+                break;
+            case 2:
+                //VIEW CART CONTENT
+                total = viewOrder(order.getSubTotal());
+                System.out.printf("Your total price is....  %.2f\n\n", total );
+                break;
+            case 3:
+                topUp();
+                break;
+            case 4:
+                addBank();
+                break;      
+        }
+        choice = exitprog;
+        }while(exitprog != 5);
+        
+        
+   
+    }
+    
+     //Retrieving game into the store===================================================================================
+  public static ArrayList<Game> filereadingGame(ArrayList<Game> gameList){
+        
+        File gameFile = new File("available_games.txt");
+  
+        try(Scanner fileread = new Scanner(gameFile)){
+             while(fileread.hasNextLine()){
+             String gameread = fileread.nextLine();  
+             Game game = new Game();
+             String[] parts = gameread.split("\\|");
+             if(parts.length== 5){
+                    game.setGameID(parts[0]); 
+                 game.setGameName(parts[1]);
+                 game.setPrice(Double.parseDouble(parts[2]));
+                 game.setGenre(parts[3]);
+                  game.setGameDesc(parts[4]);
+              }
+             gameList.add(new Game(game.getGameID(), game.getGameName(), game.getPrice(), game.getGenre(), game.getGameDesc()));
+            }
+      
+        }
+          catch(FileNotFoundException e){
+             System.out.println("The file does not exist :(");
+                }
+     return gameList;
+  }
+    //Adding new game(ONLY FOR STAFF)================================================================================
+     public static void fileWritingGame(){
+        Scanner sc = new Scanner(System.in);
+        char comfirmation;
+        Game game = new Game();
+        System.out.println("Add new game? (Y/N)> ");
+        
+        
+        do{
+         comfirmation = sc.next().charAt(0);
+         
+        if(Character.toUpperCase(comfirmation) == 'Y')
+        {           
+            
+            sc.nextLine();
+            System.out.printf("\nNew Game Name: ");
+            game.setGameName(sc.nextLine());
+            System.out.printf("\nNew Game Price: ");
+            game.setPrice(sc.nextDouble());
+            System.out.printf("""
+                              New Game Genre (Enter the number for a Genre)
+                              ---------------------------------------------
+                              1)RPG           5)Adventure
+                              2)Action        6)Horror
+                              3)Shooter       7)Relaxing
+                              4)Story Rich    8)Strategy
+                              """);
+            switch(sc.nextInt()){
+                case 1:
+                     game.setGenre("RPG");
+                     break;
+                case 2:
+                     game.setGenre("Action");
+                     break;
+                case 3:
+                     game.setGenre("Shooter");
+                     break;
+                case 4:
+                     game.setGenre("Story Rich");
+                     break;
+                case 5:
+                     game.setGenre("Adventure");
+                     break;
+                case 6:
+                     game.setGenre("Horror");
+                     break;
+                case 7:
+                     game.setGenre("Relaxing");
+                     break;
+                case 8:
+                    game.setGenre("Strategy");
+                    break;
+                default:
+                    System.out.println("\nPlease only select number from 1-8 for setting a Genre\n");
+            }
+            sc.nextLine();
+            System.out.printf("\nNew Game Description: ");
+            game.setGameDesc(sc.nextLine());
+        
+        try{
+        FileWriter writegame = new FileWriter("available_games.txt");
+        writegame.write(String.format("%s|%s|%.2f|%s|%s\n", game.getGameID(), game.getGameName(), game.getPrice(), game.getGenre(), game.getGameDesc()));
+        writegame.close();
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
+        System.out.printf("\nAdd another Game? > ");
+        comfirmation = sc.next().charAt(0);
+        }
+        else if(Character.toUpperCase(comfirmation) == 'N'){
+                break;
+                }
+        else
+        { System.out.println("Please only select Yes [Y] or No [N]");
+           sc.nextLine();
+        }
+        
+        }while(Character.toUpperCase(comfirmation) == 'Y' || Character.toUpperCase(comfirmation) != 'N');
+    }
+     //DISPLAY THE MAIN MENU =======================================================================
+public static int MainMenu()
+   {
+        boolean valid = false;
+        Scanner sc = new Scanner(System.in);
+        int choice = 0;
+        
+        do{
+            System.out.printf(
+                    """
+                    ========================================
+                          (===M===)  _____   []
+                          |   |   |  [___|   __   [===         
+                          O   o   O  [   |   ||   O   O        
+                          X       X  |   |   ||   X   X                  
+                    ========================================
+                      Welcome to Main Menu!
+                      1. Games on Sale
+                      2. Open Cart
+                      3. Add Bank Account
+                    ` 4. Top-Up Wallet
+                        """);
+            
+            
+            //validate
+            try
+            {   choice = sc.nextInt();
+                
+                if (choice < 1 || choice > 4){
+                valid = false;
+                System.out.println("Enter value is not in range with the option!");
+                System.out.println("Only enter number from 1 - 4 !");
+                }
+                else
+                valid = true;
+            }
+            catch(Exception ex){
+                valid = false;
+                sc.nextLine();
+                System.out.println("Only Enter number!");
+            }
+        }   while (valid == false);
+        return choice;
+   }
+   
+    //GAME MENU (INCLUDE VIEWING GAME, ADD TO CART, AND CALCULATE SUBTOTAL
+    public static void menucontent(ArrayList<Game> gameList){
+        int i = 0;
+        System.out.printf("""
+                          
+                          
+                          ==============================================================
+                             ====    ==   == = ==  ====    == = ==  ====  ==  =  =   =
+                            =       =  =  =======  =       =======  =     === =  =   =
+                            =  ===  ====  =  =  =  ====    =  =  =  ====  = ===  =   =
+                            =   =   =  =  =  =  =  =       =  =  =  =     =   =  =   =
+                             ====   =  =  =  =  =  ====    =  =  =  ====  =   =   ===
+                          ==============================================================
+                          """);
+        for(Game printgame : gameList){
+            gameList.get(i);
+            System.out.println(++i + ") " + printgame.getGameName());
+            
+        }
+        
+    }
+    public static double gameSelection(ArrayList<Game> gameList){
+        ArrayList<Cart> cartList = new ArrayList();
+        Game game = new Game();
+        double totalPrice = 0;
+        Scanner sc = new Scanner(System.in);
+        int option = 0;
+        char proceed;
+      do{
+        menucontent(gameList);
         System.out.printf("Select a game > ");
         boolean input = false;
        
        while(!input){
        try{
            option = sc.nextInt();
-           if(option >= 1 && option <= 5){
+           if(option >= 1 && option <= gameList.size()){
                option--;
                game = gameList.get(option);
                input = true;
            }
            else{
-              System.out.println("Invalid Option! Please select only from 1 to 5!");
+              int lastIndex = gameList.size() - 1;
+              System.out.println("Invalid Option! Please select only from 1 to " + (1 + lastIndex));
               sc.nextLine();
            }
               
        }catch (Exception ex)
        {
-           System.out.println("Invalid Option! Please select only from 1 to 5!");
+           int lastIndex = gameList.size() - 1;
+           System.out.println("Invalid Option! Please select only from 1 to " + (1 + lastIndex));
            input = false;
            sc.nextLine();
        }
@@ -143,37 +306,37 @@ public class Main
                              ______________________________
                               Game Description
                              ------------------------------ 
-                               %s
-                          ==================================================================
-                              """, game.getGameName(), game.getPrice(), game.getGenre(), game.getGameDesc()
-                                       );
-             
+                            
+                             """, game.getGameName(), game.getPrice(), game.getGenre());
+        formatGameDesc(game.getGameDesc(), 40);
+        System.out.println("=================================================================");
 
         // OPTIONS SEGMENT (CART, REVIEWS, 
-        System.out.printf("     [1] Add to Cart     [2] Reviews     [3] Back to Games   "
-                          + "\n   Please Enter An Option (1-3): ");
+        System.out.printf("""   
+                          [1] Add to Cart     [2] Reviews     [3] Back to Games   
+                          Please Enter An Option (1-3):  """);
         
         option = sc.nextInt();
-        int choice = 0;
+     
         switch(option)
         {
             case 1:
                 cartList.add(new Cart(game.getGameID(),game.getGameName(), game.getPrice()));
                 System.out.printf("""
                                   ================= Your Cart Content =================
-                                  Game Name                                       Price
+                                  Game Name                            Price
                         
                                   """);
                 for(Cart cartprint : cartList)
                 {
-                    System.out.println(cartprint.getGameName()  + "    " + cartprint.getPrice());
+                    System.out.println(cartprint.getGameName()  + "                     " + cartprint.getPrice());
                 }
                 totalPrice += game.getPrice();
                 System.out.println("Total price: " + totalPrice);
                 break;
             case 2:
-                System.out.println("\n  Showing recent reviews:" + "\n  -------------------------");
-            if (choice == 1)
+                    System.out.println("\n  Showing recent reviews:" + "\n  -------------------------");
+           /* if (choice == 1)
             {
                for (int i = 0; i < Game1Reviews.length; i++)
                {
@@ -207,19 +370,51 @@ public class Main
                {
                     System.out.println(Game5Reviews[i].displayReview());
                }
-            }
+            }*/
+            case 3:
+                menucontent(gameList);
+                
         }
         System.out.println("\n Continue Looking For Game? > ");
         proceed = sc.next().charAt(0);
         sc.nextLine();
-    }while( proceed == 'Y');
-
+        
+    }while( Character.toUpperCase(proceed) == 'Y' || Character.toUpperCase(proceed) != 'N' );
+      return totalPrice;
+    }
+    
+    //FORMAT THE DESCRIPTION TO MAKE IT LOOK LIKE A BLOCK OF TEXT
+    public static void formatGameDesc(String desc, int width){
+        String[] descSplit = desc.split("\\s+");
+        StringBuilder nextline = new StringBuilder();
+        
+        for(String descG : descSplit){
+            if(nextline.length() + descG.length() + 1 <= width){
+                if(nextline.length() > 0){
+                nextline.append(" ");
+                }
+             nextline.append(descG);
+            }
+            else
+            {
+                System.out.println("    " + nextline.toString());
+                nextline = new StringBuilder(descG);
+            }
+        }
+         if (nextline.length() > 0) {
+            System.out.println(nextline.toString());
+        }
         
     }
-   
-   public static void gameMenu(){
-        gameMenu menu = new gameMenu();
-        System.out.println(menu.toString());
+    //CHECK YOUR ORDER =============================================
+    public static double viewOrder(double totalPrice){
+        Order order = new Order();
+        
+        order.calculateTax(totalPrice);
+        order.calculateFinal(totalPrice);
+        order.setSubTotal(totalPrice);
+        System.out.println(order.toString());
+        return order.getTotal();
     }
    
    //TOP UP
@@ -293,12 +488,6 @@ public class Main
         return matcher.matches();
     }
    
-   //ORDER FUNCTION
-   public static void ordering(double cartTotal)
-   {
-       Order order = new Order(cartTotal);
-       
-       System.out.println(order.toString());
-   }
+   
 }
 
