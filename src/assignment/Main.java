@@ -435,8 +435,9 @@ public class Main
                 break;
             case 2:
                 //VIEW CART CONTENT
+                
                 total = viewOrder(order.getSubTotal());
-                System.out.printf("Your total price is....  %.2f\n\n", total );
+                System.out.printf("Your total price is....   %.2f!\n\n", total );
                 CartMenu(cartList, gameList, wallet, card, order.getSubTotal());
                 break;
             case 3:
@@ -478,23 +479,6 @@ public class Main
     //Adding new game(ONLY FOR STAFF)================================================================================
   
      public static void fileWritingGame(){
-         ArrayList<Game> gameList = new ArrayList();
-         filereadingGame(gameList);
-            //get latest id
-            //get latest element
-            int lastIndex = gameList.size() - 1;
-            Game lastestGame = gameList.get(lastIndex);
-             // extract id
-            String tempID = lastestGame.getGameID();
-
-            //extract number part of string
-            tempID = tempID.substring(1);
-
-            //change it to int
-            int tempIDnum = Integer.parseInt(tempID);
-            ++tempIDnum;
-            //combine to get new id
-            String IDholder = ("G" + (tempIDnum));
         Scanner sc = new Scanner(System.in);
         char comfirmation;
         Game game = new Game();
@@ -551,12 +535,9 @@ public class Main
             sc.nextLine();
             System.out.printf("\nNew Game Description: ");
             game.setGameDesc(sc.nextLine());
-            
-            
         
         try{
         FileWriter writegame = new FileWriter("available_games.txt", true);
-        game.setGameID(IDholder);
         writegame.write(String.format("%s|%s|%.2f|%s|%s\n", game.getGameID(), game.getGameName(), game.getPrice(), game.getGenre(), game.getGameDesc()));
         writegame.close();
         }
@@ -576,7 +557,7 @@ public class Main
         
         }while(Character.toUpperCase(comfirmation) == 'Y' || Character.toUpperCase(comfirmation) != 'N');
     }
-    
+     
      //DISPLAY THE MAIN MENU =======================================================================
 public static int MainMenu()
    {
@@ -714,15 +695,15 @@ public static int MainMenu()
                 cartList.add(new Cart(game.getGameID(),game.getGameName(), game.getPrice()));
                 System.out.printf("""
                                   ================= Your Cart Content =================
-                                  Game Name                            Price
+                                  Game Name                        Price
                         
                                   """);
                 for(Cart cartprint : cartList)
                 {
-                    System.out.println(cartprint.getGameName()  + "                     " + cartprint.getPrice());
+                    System.out.println(cartprint.getGameName()  + "              " + cartprint.getPrice());
                 }
                 totalPrice += game.getPrice();
-                System.out.println("Total price: " + totalPrice);
+                System.out.println("Total price:                    " + totalPrice);
                 break;
             case 2:
                     System.out.println("\n  Showing recent reviews:" + "\n  -------------------------");
@@ -1087,12 +1068,23 @@ public static int MainMenu()
                     if (ValidateSufficientFunds(wallet.checkBalance(), total))
                     {
                         //SUCESSFUL PAYMENT
-                        System.out.println("Successful Payment!");
+                        System.out.println("      Successful Payment!");
+                        System.out.println("============ RECEIPT ============");
+                        System.out.println("  Game Purchase           Price  ");
                         
+                        for(Cart cartprint : cartList)
+                {
+                    System.out.printf("%s      %.2f\n", cartprint.getGameName(),cartprint.getPrice());
+                }
+                        wallet.walletAmount -= total;
+                        System.out.println("--------------------------");
+                        System.out.println(  "Your Change :" + wallet.walletAmount);
+                        cartList.clear();
+            
                         //ALOYSIUS ADD THE SHOW CART and CLEAR CART HERE
-                        
-                        //RETURN TO MAIN MENU
-                        CustomerMainMenu(cartList, gameList, wallet, card);
+                     System.out.println("THANK YOU FOR SHOPPING, BYE BYE~");
+                     titleScreen();
+                     
                     }
                     else
                     {
