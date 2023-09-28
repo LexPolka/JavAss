@@ -435,7 +435,11 @@ public class Main
                 break;
             case 2:
                 //VIEW CART CONTENT
-                
+                if (cartList.isEmpty())
+                {
+                    System.out.println("\n [ You Cart is Empty!! ]\n");
+                    CustomerMainMenu(cartList, gameList, wallet, card);
+                }
                 total = viewOrder(order.getSubTotal());
                 System.out.printf("Your total price is....   %.2f!\n\n", total );
                 CartMenu(cartList, gameList, wallet, card, order.getSubTotal());
@@ -922,6 +926,7 @@ public static int MainMenu()
         boolean valid = false;
         Scanner sc = new Scanner(System.in);
         int choice =0;
+        
         do{
             System.out.println(
                     """
@@ -970,11 +975,6 @@ public static int MainMenu()
         //choice
         switch(choice){
             case 1:
-                //ALOYSIUS IF CART IS EMPTY DO THIS, IF NOT DO THAT ty ty :3
-                //if cart is empty, do this
-                //CartMenu(cartList, gameList, wallet, card, total);
-                
-                //do this if cart isnt empty
                 PaymentMenu(cartList, gameList, wallet, card, total);
                 break;
             case 2:
@@ -1030,11 +1030,27 @@ public static int MainMenu()
         {
             case 1:
                 addBank(cartList, gameList, wallet, card);
+                //SUCESSFUL PAYMENT
+                System.out.println("      Successful Payment!");
+                System.out.println("============ RECEIPT ============");
+                System.out.println("  Game Purchase           Price  ");
+
+                for(Cart cartprint : cartList)
+                {
+                    System.out.printf("%s      %.2f\n", cartprint.getGameName(),cartprint.getPrice());
+                }
+                wallet.walletAmount -= total;
+                System.out.println("--------------------------");
+                System.out.println(  "Your bank account has been charged.");
+                cartList.clear();
+
+                System.out.println("THANK YOU FOR SHOPPING, BYE BYE~");
+                titleScreen();
                 break;
             case 2:
                 //tell them your wallet balance
                 System.out.println("\nYour Wallet Balance: " + wallet.checkBalance());
-                System.out.println("Total Price        : " + total);
+                System.out.println("Total Price          : " + total);
                 //proceed?
                 choice = 0;
                 valid = false;
@@ -1043,7 +1059,7 @@ public static int MainMenu()
                             1. Yes, pay with Account Wallet.
                             2. Cancel, return to Main Menu.
                                 """);
-
+                
                 //validate
                     try
                     {   
@@ -1073,15 +1089,14 @@ public static int MainMenu()
                         System.out.println("  Game Purchase           Price  ");
                         
                         for(Cart cartprint : cartList)
-                {
-                    System.out.printf("%s      %.2f\n", cartprint.getGameName(),cartprint.getPrice());
-                }
+                        {
+                            System.out.printf("%s      %.2f\n", cartprint.getGameName(),cartprint.getPrice());
+                        }
                         wallet.walletAmount -= total;
                         System.out.println("--------------------------");
                         System.out.println(  "Your Change :" + wallet.walletAmount);
                         cartList.clear();
-            
-                        //ALOYSIUS ADD THE SHOW CART and CLEAR CART HERE
+           
                      System.out.println("THANK YOU FOR SHOPPING, BYE BYE~");
                      titleScreen();
                      
