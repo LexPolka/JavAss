@@ -76,13 +76,16 @@ public class Main
                 //VIEW CART CONTENT
                 total = viewOrder(order.getSubTotal());
                 System.out.printf("Your total price is....  %.2f\n\n", total );
+                CartMenu();
                 break;
             case 3:
                 topUp();
                 break;
             case 4:
                 addBank();
-                break;      
+                break;  
+            case 5:
+                ExitProgram();
         }
         choice = exitprog;
         }while(exitprog != 5);
@@ -217,7 +220,8 @@ public static int MainMenu()
                       1. Games on Sale
                       2. Open Cart
                       3. Add Bank Account
-                    ` 4. Top-Up Wallet
+                      4. Top-Up Wallet
+                      5. Exit Program
                         """);
             
             
@@ -225,7 +229,7 @@ public static int MainMenu()
             try
             {   choice = sc.nextInt();
                 
-                if (choice < 1 || choice > 4){
+                if (choice < 1 || choice > 5){
                 valid = false;
                 System.out.println("Enter value is not in range with the option!");
                 System.out.println("Only enter number from 1 - 4 !");
@@ -488,6 +492,77 @@ public static int MainMenu()
         return matcher.matches();
     }
    
+      public static void CartMenu()
+   {
+        boolean valid = false;
+        Scanner sc = new Scanner(System.in);
+        int choice =0;
+        do{
+            System.out.println(
+                    """
+                    ========================================
+                          o====-  __    __   |
+                          |      |__|  [    =|== 
+                          o====o |  |  [     |_
+                    ========================================
+                      Displaying Cart:
+                        """);
+            
+            // do your cart thing here !!
+            
+            System.out.println(
+                    """
+                    ========================================
+                        Please pick an option:
+                    1. Proceed with Checkout Order
+                    2. Return to Games on Sale
+                    3. Return to Main Menu
+                        """);
+            
+            //validate
+            try
+            {   
+                choice = sc.nextInt();
+                
+                if (choice < 1 || choice > 5){
+                valid = false;
+                System.out.println("Enter value is not in range with the option!");
+                System.out.println("Only enter number from 1 - 3 !");
+                }
+                else
+                valid = true;
+            }
+            catch(Exception ex){
+                valid = false;
+                sc.nextLine();
+                System.out.println("Only Enter number!");
+            }
+        }   while (valid == false);
+        
+        //choice
+        switch(choice){
+            case 1:
+                //PROCEED WITH CHECKOUT
+                //
+                //
+                break;
+            case 2:
+                //GO TO GAMES
+                //
+                //
+                break;
+            case 3:
+                MainMenu();
+                break;
+        }
+
+   }
    
+   //EXIT
+    public static void ExitProgram()
+    {
+        System.out.println("See you next time!");
+        System.exit(0);
+    }
 }
 
