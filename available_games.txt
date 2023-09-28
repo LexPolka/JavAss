@@ -8,5 +8,5 @@ G1006|Rainbow Six Siege|65.00|Shooter|Tom Clancy's Rainbow Six® Siege is an eli
 G1007|Cyberpunk 2077|219.00|RPG|Cyberpunk 2077 is an open-world, action-adventure RPG set in the dark future of Night City — a dangerous megalopolis obsessed with power, glamor, and ceaseless body modification.
 G1008|Remnant 2|156.00|Shooter|Remnant II pits survivors of humanity against new deadly creatures and god-like bosses across terrifying worlds. Play solo or co-op with two other friends to explore the depths of the unknown to stop an evil from destroying reality itself.
 G1009|Resident Evil Village|163.00|Horror|Experience survival horror like never before in the 8th major installment in the Resident Evil franchise - Resident Evil Village. With detailed graphics, intense first-person action and masterful storytelling, the terror has never felt more realistic.
-G1010|Gregs ATD|10.00|Strategy|Yes
+G1010|Gregs ATDS|10.00|Strategy|A Tower Defense Game made by Gregory from TARUMT. A game featuring an array of animals to add to your arsenal to combat against the humans! A treat to the forests! Lead them to victory!
 G1011|Phasmophobia|31.00|Horror|Phasmophobia is a 4 player online co-op psychological horror. Paranormal activity is on the rise and it’s up to you and your team to use all the ghost-hunting equipment at your disposal in order to gather as much evidence as you can.
