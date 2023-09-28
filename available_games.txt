@@ -8,3 +8,4 @@ G1006|Rainbow Six Siege|65.00|Shooter|Tom Clancy's Rainbow Six® Siege is an eli
 G1007|Cyberpunk 2077|219.00|RPG|Cyberpunk 2077 is an open-world, action-adventure RPG set in the dark future of Night City — a dangerous megalopolis obsessed with power, glamor, and ceaseless body modification.
 G1008|Remnant 2|156.00|Shooter|Remnant II pits survivors of humanity against new deadly creatures and god-like bosses across terrifying worlds. Play solo or co-op with two other friends to explore the depths of the unknown to stop an evil from destroying reality itself.
 G1009|Resident Evil Village|163.00|Horror|Experience survival horror like never before in the 8th major installment in the Resident Evil franchise - Resident Evil Village. With detailed graphics, intense first-person action and masterful storytelling, the terror has never felt more realistic.
+null|Gregs ATD|10.00|Strategy|Yes

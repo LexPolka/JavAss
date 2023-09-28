@@ -10,6 +10,10 @@ package assignment;
  */
 public class Customer extends User {
     //Constructor
+    public Customer(){
+        
+    }
+    
     public Customer(String userID, String userPw, String userEmail)
     {
         super(userID, userPw, userEmail);

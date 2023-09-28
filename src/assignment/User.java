@@ -13,6 +13,10 @@ public class User {
     private String userPw;
     private String userEmail;
     
+    public User(){
+        
+    }
+    
     //Constructor
     public User(String  userID, String userPw, String userEmail){
         this.userID = userID;

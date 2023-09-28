@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 public class Main 
 {   
     public static void main(String[] args) 
@@ -54,10 +55,377 @@ public class Main
 
         ArrayList<Game> gameList = new ArrayList();
         ArrayList<Cart> cartList = new ArrayList();
-        MainMainMenu(cartList, gameList);
+        titleScreen();
+        CustomerMainMenu(cartList, gameList);
     }
     
-    public static void MainMainMenu(ArrayList<Cart> cartList, ArrayList<Game> gameList)
+    public static void titleScreen() {
+        // TODO code application logic here
+        
+        
+        
+        ArrayList<Customer> cusLogin = new ArrayList<Customer>();
+        filereadingCusData(cusLogin);
+        
+        Scanner scanner = new Scanner(System.in);
+        
+        
+        boolean exitChoice = false;
+        do {
+            System.out.println(" |<========================================================================>|");
+            System.out.println(" |    ===++=== ||                  /======>>                       |  //    |");
+            System.out.println(" |       []    ||      //====     (                          ____  | //     |");
+            System.out.println(" |       []    |====|  |_____      \\====\\  //==\\\\ //==\\\\  //      ||        |");
+            System.out.println(" |       []    ||  ||  |                  ) ||  || \\\\__||  [       | \\      |");
+            System.out.println(" |       []    ||  ||  L=====      ======/  ||  ||     ||  \\\\____  |  \\\\    |");
+            System.out.println(" |                                                                          |");
+            System.out.println(" |     //===>  ___,    //   ____.                      L ____________ R     |");
+            System.out.println(" |    //      /   /   //  //       /===@   L===\\\\     //         X   \\\\     |");
+            System.out.println(" |   //===   /___/   //  //       /    /  //   //    /  [ ]    Y   A   \\    |");
+            System.out.println(" |  //         //   //   \\___.  @===/   //   //     \\      _____B     /     |");
+            System.out.println(" |                                                    \\____/     \\____/     |");
+            System.out.println(" |<========================================================================>|");
+
+
+            System.out.println("1. REGISTER");
+            System.out.println("2. LOGIN");        
+            System.out.println("3. EXIT");
+            System.out.println("Enter choice >");
+            int userChoice = scanner.nextInt(); //userchoice for switch
+        
+
+            
+            
+            
+            switch(userChoice) {
+            case 1:
+                System.out.println("Type exit to return to title screen");
+                fileWritingCustomer();
+                break;
+
+            case 2:
+                // call login function            
+                chkUsrOrStf();
+                  
+                break;
+            case 3:
+                
+                System.out.print("Thanks for coming!");
+                exitChoice = true;
+                
+            default:
+                throw new AssertionError();
+        }
+        } while (!exitChoice);
+               
+    
+        
+    } // end of main
+    
+    public static void chkUsrOrStf(){
+        
+        ArrayList<Customer> cusLogin = new ArrayList<Customer>();
+        filereadingCusData(cusLogin);
+        
+    Scanner scanner = new Scanner(System.in);
+    int errorChecking = 0; 
+    String pwHolder = "";
+    String idHolder = "";
+    User user = new Customer();
+
+        Staff[] stflogin = new Staff[10];
+        stflogin[0] = new Staff("S1000","staff1","S1001@mail.com");
+        stflogin[1] = new Staff("S1001","staff2","S1002@mail.com");
+        stflogin[2] = new Staff("S1002","staff3","S1003@mail.com");
+        stflogin[3] = new Staff("S1003","staff4","S1004@mail.com");
+        stflogin[4] = new Staff("S1004","staff5","S1005@mail.com");
+        stflogin[5] = new Staff("S1005","staff6","S1006@mail.com");
+        stflogin[6] = new Staff("S1006","staff7","S1007@mail.com");
+        stflogin[7] = new Staff("S1007","staff8","S1008@mail.com");
+        stflogin[8] = new Staff("S1008","staff9","S1009@mail.com");
+        stflogin[9] = new Staff("S1009","staff10","S1010@mail.com");
+        
+        //loopings, used to loop until user types exit
+        boolean loopingMain = false;
+        boolean looping1 = false;
+        boolean looping2 = false;
+        boolean next = false;
+        boolean next2 = false;
+        do{
+            do {
+                System.out.println("Type exit to return to title screen");
+                 System.out.println("Enter ID       >");
+                    user.setuserID(scanner.next());
+                    idHolder = user.getuserID(); 
+
+
+                   if (idHolder.startsWith("S")) {
+                       errorChecking = 0;
+                       System.out.println("You are a Staff!");
+                       //get length of staff array
+                       int arrayLength = stflogin.length;
+                       //get id & pw
+                       for (int i = 0; i < stflogin.length; i++) {
+                           if ( idHolder.equals(stflogin[i].getuserID())) {
+                               System.out.println("ID found !Staff ID > " + stflogin[i].getuserID());
+                               pwHolder = stflogin[i].getuserPw();
+                               i = arrayLength;
+                               next = true;
+                               
+                           }
+                           else{
+                               //counter
+                               errorChecking++;   }                 
+                       }
+                       //go through array, if counter = arraylength while still not finding, must not exist
+                       if (errorChecking == arrayLength) {
+                               System.out.println("Error! Staff ID not found!");
+                               looping1 = true;
+
+                        }
+                           // bool to check password validity
+                           if (next == true) {
+                           looping2 = false;
+                           do {
+                              System.out.println("Enter Password >");
+                              String userInput = scanner.next();
+
+                               if (userInput.equals(pwHolder)) {
+                                   System.out.println("Login Success!");
+                                   loopingMain = true;
+                                   looping1 = true;
+                                   looping2 = true;
+                                   StaffMenu();
+                                   
+                               }// exit
+                               else if ("exit".equalsIgnoreCase(userInput) == true) {
+                                   System.out.println("Returning to title screen");
+                                   looping1 = true;
+                                   looping2 = true;
+                               }
+                               else{
+                                   System.out.println("Error ! wrong password");
+                               }
+
+
+                          }while(!looping2);
+                       }
+                    }
+                else if(idHolder.startsWith("C")){
+                      System.out.println("You are a Customer!");
+
+                      // extract id
+                        looping2 = false;
+                        next2 = false;
+                        int errorChk2 = 0;
+                        // loop until array ends.
+                        for (Customer customer : cusLogin) {
+                            if (idHolder.equals(customer.getuserID())) {
+
+                                looping2 = true;
+                                System.out.println("ID found! Customer ID > " + customer.getuserID());
+                                pwHolder = customer.getuserPw();
+                                next2 = true;
+                                break;
+                            }
+                            
+                            else{
+                                errorChk2++;
+                            }
+                            if (errorChk2 == cusLogin.size()) {
+                            System.out.println("Error ! Customer ID not found!");
+                            
+                            }
+                        }
+                        if (next2 == true) {
+                                   boolean passwChk2 = false;
+                                   do {
+                                      System.out.println("Enter Password >");
+                                      String userInput2 = scanner.next();
+
+                                       if (userInput2.equals(pwHolder)) {
+                                           System.out.println("Login Success!");
+                                           MainMenu();
+                                           loopingMain = true;
+                                           looping1 = true;
+                                           passwChk2 = true;
+                                       }
+                                       else if ("exit".equalsIgnoreCase(userInput2) == true) {
+                                           System.out.println("Returning to title screen");
+                                           looping1 = true;
+                                           passwChk2 = true;
+                                       }
+                                       else{
+                                           System.out.println("Error ! wrong password");
+                                       }
+
+
+                                  }while (!passwChk2);
+                        }
+                       
+
+                   
+                  }
+                else if("exit".equalsIgnoreCase(idHolder) == true){
+                    System.out.println("Returning to title screen");
+                    loopingMain = true;
+                    looping1 = true;
+                   
+                } 
+                  else{
+                       System.out.println("Error ! Invalid ID");
+                  }
+       
+            } while (!looping1);
+        }while(!loopingMain);
+          //idk what to put here for now
+          
+           
+}
+    public static void StaffMenu(){
+        Scanner sc = new Scanner(System.in);
+        boolean staffLooper = false;
+        while(!staffLooper){
+            System.out.println("What do you want to do ?");
+            System.out.println("1. Add Game");
+            System.out.println("2. Exit Program");
+
+            int staffChoice = sc.nextInt();
+                
+            switch(staffChoice){
+                case 1:
+                    fileWritingGame();
+                case 2:
+                    ExitProgram();
+                default:
+                    System.out.printf("\n Error ! Invalid Choice");
+                
+            }
+            
+        }
+        
+        
+        
+    }
+    
+    
+    //READ CUSTOMER DATAFILE
+    public static ArrayList<Customer> filereadingCusData(ArrayList<Customer> cusLogin){
+
+        File cusData = new File("cusData.txt");
+
+        try(Scanner fileread = new Scanner(cusData)){
+             while(fileread.hasNextLine()){
+             String cusread = fileread.nextLine();
+             Customer cus = new Customer();
+             String[] parts = cusread.split("\\|");
+             if(parts.length== 3){
+                    cus.setuserID(parts[0]); 
+                    cus.setuserPw(parts[1]);
+                    cus.setuserEmail(parts[2]);
+              }
+             cusLogin.add(new Customer(cus.getuserID(), cus.getuserPw(), cus.getuserEmail()));
+            }
+
+        }
+          catch(FileNotFoundException e){
+               System.out.println("Error ! File Not Found!");
+                }
+     return cusLogin;
+  }
+    //WRITE CUS FILE   
+    public static void fileWritingCustomer(){
+        boolean exitRegi = false;
+        Scanner sc = new Scanner(System.in);
+        
+        do {
+            ArrayList<Customer> cusLogin = new ArrayList<Customer>();
+            filereadingCusData(cusLogin);
+
+            //get latest id
+            //get latest element
+            int lastIndex = cusLogin.size() - 1;
+            Customer latestCustomer = cusLogin.get(lastIndex);
+
+            // extract id
+            String cusIdHolder = latestCustomer.getuserID();
+
+            //extract number part of string
+            cusIdHolder = cusIdHolder.substring(1);
+
+            //change it to int
+            int usrIdNum = Integer.parseInt(cusIdHolder);
+            ++usrIdNum;
+            //combine to get new id
+            String newUsrIdNum = ("C" + (usrIdNum));
+
+            Customer cus = new Customer(); 
+            System.out.println("New ID > " +newUsrIdNum);
+                cus.setuserID(newUsrIdNum);
+                System.out.printf("\nEnter Password > ");
+                cus.setuserPw(sc.nextLine());
+                
+                //email + validate email
+                boolean validEmail = false;
+                String tempEmail;
+                do
+                {
+                System.out.printf("\nEnter Email > ");
+
+                tempEmail = sc.nextLine();
+
+                    if (validateEmail(tempEmail))
+                    {
+                        validEmail = true;
+                    }
+                    else
+                    {
+                        System.out.println("Invalid Email! Please follow email format!");
+                    }
+                } while (validEmail == false);
+                
+                cus.setuserEmail(tempEmail);
+                
+                System.out.println("ID       > "+ cus.getuserID());
+                System.out.println("Password > "+ cus.getuserPw());
+                System.out.println("Email    > " +cus.getuserEmail());
+                System.out.println("Confirm ? (Y = proceed /N = return to title screen)> ");
+                char comfirmation2 = sc.next().charAt(0);
+
+                if (Character.toUpperCase(comfirmation2) == 'Y') {
+                     try{
+                        FileWriter writecus = new FileWriter("cusData.txt", true);
+                        writecus.write(String.format("%s|%s|%s\n", cus.getuserID(), cus.getuserPw(), cus.getuserEmail()));
+                        writecus.close();
+                        System.out.printf("\nRegister succesful!\n");
+                        exitRegi = true;
+                        }
+                        catch(IOException e){
+                            System.out.printf("\nRegister Failed\n");
+                            e.printStackTrace();
+                        }
+                }else if (Character.toUpperCase(comfirmation2) == 'N'){
+                    exitRegi = true;
+                    break;
+                }
+                else
+                { System.out.println("\nPlease only select Yes [Y] or No [N]\n");
+                   sc.nextLine();
+                }
+        } while (!exitRegi);
+
+    
+    }
+    
+    public static boolean validateEmail(String email) {
+        String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@(.+)$";
+        Pattern pattern = Pattern.compile(EMAIL_REGEX);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
+  
+    
+    public static void CustomerMainMenu(ArrayList<Cart> cartList, ArrayList<Game> gameList)
     {   
         // GAMES
         Order order = new Order();
@@ -122,6 +490,7 @@ public class Main
      return gameList;
   }
     //Adding new game(ONLY FOR STAFF)================================================================================
+  
      public static void fileWritingGame(){
         Scanner sc = new Scanner(System.in);
         char comfirmation;
@@ -247,6 +616,9 @@ public static int MainMenu()
         return choice;
    }
    
+
+
+
     //GAME MENU (INCLUDE VIEWING GAME, ADD TO CART, AND CALCULATE SUBTOTAL
     public static void menucontent(ArrayList<Game> gameList){
         int i = 0;
@@ -291,7 +663,7 @@ public static int MainMenu()
            }
            else if (option == 0)
            {
-               MainMainMenu(cartList, gameList);
+               CustomerMainMenu(cartList, gameList);
            }
            else{
               int lastIndex = gameList.size() - 1;
@@ -558,7 +930,7 @@ public static int MainMenu()
                 //
                 break;
             case 2:
-                MainMainMenu(cartList, gameList);
+                CustomerMainMenu(cartList, gameList);
                 break;
         }
    }
