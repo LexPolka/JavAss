@@ -53,7 +53,7 @@ public class Main
             System.out.println(" |     //===>  ___,    //   ____.                      L ____________ R     |");
             System.out.println(" |    //      /   /   //  //       /===@   L===\\\\     //         X   \\\\     |");
             System.out.println(" |   //===   /___/   //  //       /    /  //   //    /  [ ]    Y   A   \\    |");
-            System.out.println(" |  //         //   //   \\___.   @===/   //   //     \\      _____B     /     |");
+            System.out.println(" |  //         //   //   \\___.   @===/   //   //     \\      _____B     /    |");
             System.out.println(" |                                                    \\____/     \\____/     |");
             System.out.println(" |<========================================================================>|");
 
@@ -716,7 +716,7 @@ public static int MainMenu()
                 cartList.add(new Cart(game.getGameID(),game.getGameName(), game.getPrice()));
                 System.out.println("""
                                   \n================= Your Cart Content =================
-                                  Game Name                         Price
+                                  Game Name                                 Price
                         
                                   """);
                   for(Cart cartprint : cartList)
@@ -914,13 +914,13 @@ public static int MainMenu()
         do{
             System.out.println(
                     """
-                    ========================================
-                          o====-  __    __   |
-                          |      |__|  [    =|== 
-                          o====o |  |  [     |_
-                    ========================================
+                    =============================================
+                             o====-  __    __   |
+                             |      |__|  [    =|== 
+                             o====o |  |  [     |_
+                    =============================================
                       Displaying Cart:
-                     Name                         Price
+                     Name                               Price
                         """);
             // do your cart thing here !!
                 for(Cart cartprint : cartList)
